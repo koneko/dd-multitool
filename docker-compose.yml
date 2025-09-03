@@ -18,6 +18,11 @@ services:
             - api
         ports:
             - "8080:4321"
+    web-healthcheck:
+        test: curl --fail http://localhost:8080/ || exit 1
+        interval: 30s
+        timeout: 5s
+        retries: 3
     bot:
         restart: unless-stopped
         image: dd-multitool-bot:latest
@@ -29,6 +34,7 @@ services:
             - dundef-tool
         depends_on:
             - api
-    
+
+
 networks:
     dundef-tool:

@@ -5,8 +5,8 @@ import { defineConfig } from "auth-astro";
 export default defineConfig({
     providers: [
         Discord({
-            clientId: process.env.AUTH_SECRET,
-            clientSecret: process.env.AUTH_SECRET,
+            clientId: process.env.DDMT_WEB_CLIENT_ID,
+            clientSecret: process.env.DDMT_WEB_CLIENT_SECRET,
         }),
     ],
     secret: process.env.AUTH_SECRET,

@@ -1,0 +1,15 @@
+<div class="create-map-preview" onpointerdown={Astro.props.callback}>
+    <p>{Astro.props.name}</p>
+    <hr />
+    <img
+        src={Astro.props.src}
+        alt={Astro.props.name}
+        style="width: 290px; height:290px"
+    />
+</div>
+
+<style>
+    .create-map-preview {
+        cursor: pointer;
+    }
+</style>

@@ -1,6 +1,11 @@
 ---
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
-export const prerender = true;
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+if (!session) {
+    return Astro.redirect("/");
+}
 ---
 
 <Layout>

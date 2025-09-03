@@ -1,0 +1,34 @@
+name: dd-multitool
+services:
+    api:
+        restart: unless-stopped
+        image: dd-multitool-api:latest
+        environment:
+            - PORT=2000
+        networks:
+            - dundef-tool
+    web:
+        restart: unless-stopped
+        image: dd-multitool-web:latest
+        environment:
+            - SHARED_ENDPOINT=http://api:2000/
+        networks:
+            - dundef-tool
+        depends_on:
+            - api
+        ports:
+            - "8080:4321"
+    bot:
+        restart: unless-stopped
+        image: dd-multitool-bot:latest
+        environment:
+            - TOKEN=${TOKEN}
+            - PREFIX=${PREFIX}
+            - SHARED_ENDPOINT=http://api:2000/
+        networks:
+            - dundef-tool
+        depends_on:
+            - api
+    
+networks:
+    dundef-tool:

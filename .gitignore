@@ -1,0 +1,5 @@
+config.json
+node_modules/
+bot.tar
+api.tar
+web.tar

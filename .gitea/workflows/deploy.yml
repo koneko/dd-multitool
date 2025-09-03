@@ -11,6 +11,9 @@ jobs:
         env:
             TOKEN: ${{ secrets.TOKEN }}
             PREFIX: ${{ secrets.PREFIX }}
+            DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
+            DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
+            AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3

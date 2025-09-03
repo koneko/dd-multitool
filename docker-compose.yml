@@ -12,6 +12,9 @@ services:
         image: dd-multitool-web:latest
         environment:
             - SHARED_ENDPOINT=http://api:2000/
+            - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
+            - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
+            - AUTH_SECRET=${AUTH_SECRET}
         networks:
             - dundef-tool
         depends_on:

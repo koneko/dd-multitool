@@ -109,13 +109,6 @@ client.on(Events.MessageCreate, async (message) => {
     )
         return;
 
-    for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
-        let uid = BLACKLISTED_USERS_IDS[i];
-        if (message.author.id == uid)
-            return message.channel.send(
-                "Command exited with an exception: `Asshole: You are disrespectful and hurt my feelings. You can no longer use my services.`"
-            );
-    }
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     console.log(args);
@@ -126,6 +119,13 @@ client.on(Events.MessageCreate, async (message) => {
 
     if (!cmd) return;
     try {
+        for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
+            let uid = BLACKLISTED_USERS_IDS[i];
+            if (message.author.id == uid)
+                return message.channel.send(
+                    "Command exited with an exception: `Asshole: You are disrespectful and hurt my feelings. You can no longer use my services.`"
+                );
+        }
         await cmd.run(client, message, args);
     } catch (e) {
         message.channel.send(

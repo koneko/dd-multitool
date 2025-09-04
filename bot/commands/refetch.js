@@ -5,7 +5,8 @@ exports.example = "CLIENT_PREFIX:refetch";
 exports.hidden = true;
 exports.isAlias = false;
 exports.run = async (client, message, args) => {
-    if (message.author.id != client.ownerID) return;
+    if (message.author.id != client.ownerID)
+        return message.channel.send("not for you :3");
     try {
         const url = "https://drive.overflow.fun/public/react.json";
         client.usersToReactTo = [];

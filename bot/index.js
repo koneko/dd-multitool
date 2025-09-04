@@ -23,6 +23,7 @@ const DDRNG_ALLOWED_CHANNELS = [
     496061346446835732, 499656239572058132, 771329671953776661,
     556864412338749440,
 ];
+const BLACKLISTED_USERS_IDS = [1054183205726588988]; // so far only Joann rule
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
 client.commands = new Collection();
 client.ownerID = 263247134147608578;
@@ -108,6 +109,13 @@ client.on(Events.MessageCreate, async (message) => {
     )
         return;
 
+    for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
+        let uid = BLACKLISTED_USERS_IDS[i];
+        if (message.author.id == uid)
+            return message.channel.send(
+                "Command exited with an exception: `Asshole: You are disrespectful and hurt my feelings. You can no longer use my services.`"
+            );
+    }
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     console.log(args);

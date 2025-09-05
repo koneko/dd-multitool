@@ -123,7 +123,7 @@ client.on(Events.MessageCreate, async (message) => {
             let uid = BLACKLISTED_USERS_IDS[i];
             if (message.author.id == uid)
                 return message.channel.send(
-                    "Command exited with an exception: `Asshole: You are disrespectful and hurt my feelings. You can no longer use my services.`"
+                    "`You are prohibited from using this bot. Good luck elsewhere!`"
                 );
         }
         await cmd.run(client, message, args);

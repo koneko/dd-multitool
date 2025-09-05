@@ -35,6 +35,12 @@ const knowledge = [
         content:
             'True Boss Rush is the hardest hero only content in the game.\nTo access True Boss Rush, you need to complete the Eternal Defender achievement and have defeated Great Old One in CR3 (the required maps for unlocking Great Old One are Crystalline Dimension, Dread Dungeon, Arcane Library, Buccaneer Bay, Pirate Invasion, Embermount Volcano, Temple of Water, Temple of Polybius and Crystalline Resurgence Parts 1-3 on NMHC).\nBefore you can do great old one you have to beat cr3 again after beating all of the aforementioned maps, you beat it, it counts towards the secret button unlocking, then you have to beat it again after pressing the button, the button should say something like "!??!?!?!?!?".\nAfter that, a button will appear next to the Experience Orb in the basement. Press the button to enter the map.',
     },
+    {
+        topic: "censor",
+        title: "Why and how do we censor items",
+        content:
+            "Please turn on the in-game censor option before posting a picture of an item here.\nIt will replace the last digit of stats on special rare items with an x to hide that digit.\nThis stops people from making duplicates of the item and helps prevent hackers from learning too much about how these items roll to make their own legitimate looking ones.\nWe ask that you censor all Ultimate++ (and higher for Redux) items as well as Ultimate accessories, Ultimate seahorses, Transcendent propeller cats and Supreme unicorns.",
+    },
 ];
 
 export const get = async (req, res) => {

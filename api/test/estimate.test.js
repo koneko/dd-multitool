@@ -13,7 +13,7 @@ describe("Test estimate route", () => {
         expect(res.body.estimatedPrice).toBeGreaterThan(0);
     });
 
-    it("estimated price must be 0 for valueless item", async () => {
+    it("returns estimated price to be 0 for a valueless item", async () => {
         const res = await request(app)
             .get("/estimate")
             .query({ q: "1000 ab2" });

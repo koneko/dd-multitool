@@ -103,7 +103,7 @@ export const get = async (req, res) => {
         mainStat -= over;
         subStat += over;
     }
-    res.json({
+    return res.json({
         resUpgrades,
         mainStat,
         subStat,

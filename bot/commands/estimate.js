@@ -90,7 +90,7 @@ exports.run = async (client, message, args) => {
                         stringprice = `**${estimatedPrice}**`;
                     }
                     message.channel.send(
-                        `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
+                        `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG. Take this estimation with a grain of salt.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
                     );
                 }
             }

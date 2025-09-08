@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import request from "supertest";
 import app from "../index.js";
 
-describe("Price API", () => {
+describe("Test estimate route", () => {
     it("returns estimated price for valid game value", async () => {
         const res = await request(app)
             .get("/estimate")

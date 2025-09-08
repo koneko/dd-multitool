@@ -18,6 +18,11 @@ const priceTable = [
         prices: ["1400;20", "1500;40", "1550;60", "1600;100"],
     },
     {
+        regex: /\b(?:ab1 genie)\b/i,
+        returnKeyWord: "ab1 genie",
+        prices: ["833;55", "900;100", "999;130"],
+    },
+    {
         regex: /\b(?:dps|ab2|dps armor|ab2 armor|monk)\b/i,
         returnKeyWord: "dps/ab2 piece",
         prices: [
@@ -91,9 +96,27 @@ const priceTable = [
         ],
     },
     {
+        regex: /\b(?:lumeric staff|beamer ev|dps ev weapon)\b/i,
+        returnKeyWord: "dps ev weapon/lumeric staff",
+        prices: ["56000;15"],
+    },
+    {
+        regex: /\b(?:builder ev weapon|kk ev)\b/i,
+        returnKeyWord: "builder ev weapon",
+        prices: ["999;10"],
+    },
+    {
         regex: /\b(?:ev|tdmg|tdamage)\b/i,
         returnKeyWord: "builder ev/tower damage piece",
-        prices: ["950;5", "1040;10"],
+        prices: [
+            "1000;5",
+            "1050;15",
+            "1100;25",
+            "1150;50",
+            "1200;100",
+            "1250;200",
+            "1300;300",
+        ],
     },
     {
         regex: /\b(?:cupid|lover's cupid)\b/i,
@@ -109,9 +132,85 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:)\b/i,
-        returnKeyWord: "",
-        prices: ["950;5"],
+        regex: /\b(?:builder warden weapon|warden weapon|warden|warden builder spear|warden spear)\b/i,
+        returnKeyWord: "builder warden weapon",
+        prices: [
+            "2200;5",
+            "2300;25",
+            "2400;60",
+            "2500;100",
+            "2600;150",
+            "2700;250",
+            "2800;400",
+            "2810;500",
+        ],
+    },
+    {
+        regex: /\b(?:cdrag|crystalline dragon|dragon)\b/i,
+        returnKeyWord: "cdrag",
+        prices: [
+            "60000;90",
+            "61000;100",
+            "62000;150",
+            "63000;190",
+            "64000;230",
+            "65000;400",
+            "66000;700",
+            "67000;1500",
+        ],
+    },
+    {
+        regex: /\b(?:ult acc|ultimate accessory|ultimate acc)\b/i,
+        returnKeyWord: "ultimate accessory",
+        prices: ["500;5", "520;150", "540;250"],
+    },
+    {
+        regex: /\b(?:gw armor|gw|gunwitch|gunwitch armor)\b/i,
+        returnKeyWord: "gunwitch armor",
+        prices: ["1484;35", "1500;40", "1550;60"],
+    },
+    {
+        regex: /\b(?:witch's broom|broom|witch broom)\b/i,
+        returnKeyWord: "witch's broom",
+        prices: [
+            "300000;20",
+            "316000;50",
+            "330000;105",
+            "346000;150",
+            "354000;350",
+            "368000;500",
+        ],
+    },
+    {
+        regex: /\b(?:ice needle|ice needle armor)\b/i,
+        returnKeyWord: "ice needle armor",
+        prices: ["1084;30"],
+    },
+    {
+        regex: /\b(?:madness boulder thrower|mbt)\b/i,
+        returnKeyWord: "madness boulder thrower",
+        prices: ["914;20", "974;100", "988;150"],
+    },
+    {
+        regex: /\b(?:hermit's swallow|swallow|hermit swallow)\b/i,
+        returnKeyWord: "hermit's swallow",
+        prices: ["192000;25", "199000;100", "210000;400"],
+    },
+    {
+        regex: /\b(?:calamity blade|cblade|cb)\b/i,
+        returnKeyWord: "calamity blade",
+        prices: [
+            "99000;40",
+            "102000;75",
+            "103000;100",
+            "104000;110",
+            "106000;125",
+        ],
+    },
+    {
+        regex: /\b(?:eye|eye of desolation|eye of ruin|eye of destruction)\b/i,
+        returnKeyWord: "eye of desolation/ruin/destruction",
+        prices: ["54000;25", "64000;70", "65000;80", "67000;150", "68000;500"],
     },
 ];
 

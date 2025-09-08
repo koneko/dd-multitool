@@ -17,7 +17,6 @@ services:
             - AUTH_SECRET=${AUTH_SECRET}
             - AUTH_TRUST_HOST=true
             - AUTH_URL=https://ddmt.overflow.fun
-
         networks:
             - dundef-tool
         depends_on:
@@ -40,7 +39,6 @@ services:
             - dundef-tool
         depends_on:
             - api
-
 
 networks:
     dundef-tool:

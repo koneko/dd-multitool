@@ -62,35 +62,35 @@ jobs:
               working-directory: ./bot
               run: npm test
 
-        build-and-deploy:
-            runs-on: ddmt-prod
-            needs: [test-api, test-bot]
-            env:
-                TOKEN: ${{ secrets.TOKEN }}
-                PREFIX: ${{ secrets.PREFIX }}
-                AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-                DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
-                DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
-            steps:
-                - name: Checkout code
-                  uses: actions/checkout@v3
-                  with:
-                      fetch-depth: 2
+    build-and-deploy:
+        runs-on: ddmt-prod
+        needs: [test-api, test-bot]
+        env:
+            TOKEN: ${{ secrets.TOKEN }}
+            PREFIX: ${{ secrets.PREFIX }}
+            AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+            DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
+            DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
 
-                - name: Build containers
-                  run: bash ./containers-build.sh
+            - name: Build containers
+              run: bash ./containers-build.sh
 
-                - name: Restart changed containers
-                  if: success()
-                  run: |
-                      if [ -f changed_services.txt ]; then
-                        for service in $(cat changed_services.txt); do
-                          echo "Restarting $service..."
-                          docker compose up -d --force-recreate $service
-                        done
-                      else
-                        echo "No containers need restarting."
-                      fi
+            - name: Restart changed containers
+              if: success()
+              run: |
+                  if [ -f changed_services.txt ]; then
+                    for service in $(cat changed_services.txt); do
+                      echo "Restarting $service..."
+                      docker compose up -d --force-recreate $service
+                    done
+                  else
+                    echo "No containers need restarting."
+                  fi
 
-                - name: Cleanup old images
-                  run: docker image prune -f
+            - name: Cleanup old images
+              run: docker image prune -f

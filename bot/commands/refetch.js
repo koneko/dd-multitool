@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
         );
     } catch (e) {
         return message.channel.send(
-            "copyparty instance unreachable/offline..."
+            "copyparty instance unreachable/offline...."
         );
     }
 };

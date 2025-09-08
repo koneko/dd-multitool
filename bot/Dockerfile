@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 # Install dependencies
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 COPY --chown=node:node . .
 

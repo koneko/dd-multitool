@@ -1,4 +1,4 @@
-name: Deploy bot
+name: Test, build and deploy to production
 
 on:
     push:
@@ -8,22 +8,43 @@ on:
 jobs:
     test-api:
         runs-on: ubuntu-latest
-        env:
-            NODE_ENV: test
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+
+            - name: Check commit message for skiptests
+              id: skip_check
+              run: |
+                  echo "Checking commit message..."
+                  LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+                  echo "Last commit message: $LAST_COMMIT_MSG"
+                  if [[ "$LAST_COMMIT_MSG" == *"skiptests"* ]]; then
+                    echo "skip=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "skip=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Skip tests if commit contains skiptests
+              if: steps.skip_check.outputs.skip == 'true'
+              run: |
+                  echo "Skipping tests due to commit message containing 'skiptests'"
+                  exit 0
 
             - name: Setup Node
+              if: steps.skip_check.outputs.skip != 'true'
               uses: actions/setup-node@v3
               with:
                   node-version: 20
 
             - name: Install API dependencies
+              if: steps.skip_check.outputs.skip != 'true'
               working-directory: ./api
               run: npm install
 
             - name: Run API tests
+              if: steps.skip_check.outputs.skip != 'true'
               working-directory: ./api
               run: npm test
 

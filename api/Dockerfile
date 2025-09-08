@@ -1,6 +1,4 @@
-ARG NODE_VERSION=23.0.0
-
-FROM node:${NODE_VERSION}-alpine
+FROM node:23-slim
 
 WORKDIR /usr/src/app
 

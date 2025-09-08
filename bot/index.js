@@ -111,11 +111,8 @@ client.on(Events.MessageCreate, async (message) => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    console.log(args);
 
     const cmd = client.commands.get(command);
-    console.log(command);
-    console.log(cmd);
 
     if (!cmd) return;
     try {

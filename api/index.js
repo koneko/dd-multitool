@@ -6,4 +6,6 @@ const app = express();
 
 app.use("/", await router());
 
-app.listen(PORT, () => console.log("API listening on port " + PORT + "."));
+export default app;
+if (process.env.NODE_ENV !== "test")
+    app.listen(PORT, () => console.log("API listening on port " + PORT + "."));

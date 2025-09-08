@@ -39,7 +39,7 @@ const knowledge = [
         topic: "censor",
         title: "Why and how do we censor items",
         content:
-            "Please turn on the in-game censor option before posting a picture of an item here.\nIt will replace the last digit of stats on special rare items with an x to hide that digit.\nThis stops people from making duplicates of the item and helps prevent hackers from learning too much about how these items roll to make their own legitimate looking ones.\nWe ask that you censor all Ultimate++ (and higher for Redux) items as well as Ultimate accessories, Ultimate seahorses, Transcendent propeller cats and Supreme unicorns.",
+            'Please turn on the in-game censor option before posting a picture of an item here. (shortcut CTRL+C or the "Censor items" option in game.)\nIt will replace the last digit of stats on special rare items with an x to hide that digit.\nThis stops people from making duplicates of the item and helps prevent hackers from learning too much about how these items roll to make their own legitimate looking ones.\nWe ask that you censor all Ultimate++ (and higher for Redux) items as well as Ultimate accessories, Ultimate seahorses, Transcendent propeller cats and Supreme unicorns.',
     },
 ];
 

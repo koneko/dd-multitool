@@ -7,5 +7,12 @@
     "dependencies": {
         "express": "^5.1.0",
         "express-file-routing": "^3.1.0"
+    },
+    "scripts": {
+        "test": "vitest run"
+    },
+    "devDependencies": {
+        "supertest": "^7.1.4",
+        "vitest": "^3.2.4"
     }
 }

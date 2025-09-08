@@ -4,7 +4,7 @@ exports.description =
 exports.usage =
     "CLIENT_PREFIX:estimate [summary of item you want the price of]";
 exports.example =
-    "CLIENT_PREFIX:estimate 1600 ab2\nCLIENT_PREFIX:estimate 1100 thp\nCLIENT_PREFIX:estimate 2400 app builder staff\nCLIENT_PREFIX:estimate 2200 app builder piece\nCLIENT_PREFIX:estimate 2200 app armor\n(you can also include `showtable` anywhere to show raw price data)\n(always put number first, do not put conflicting data to avoid confusion)";
+    "CLIENT_PREFIX:estimate 1600 ab2\nCLIENT_PREFIX:estimate 1100 thp\nCLIENT_PREFIX:estimate 2400 app builder staff\nCLIENT_PREFIX:estimate 2200 app builder piece\nCLIENT_PREFIX:estimate 2200 app armor\n(running the command without a query shows all available items)\n(you can also include `showtable` anywhere to show raw price data)\n(you can also include `bereal` for prices that are above 500cv for the result to be less ambigous)\n(always put number first, do not put conflicting data to avoid confusion)";
 exports.hidden = false;
 exports.isAlias = false;
 exports.run = async (client, message, args) => {
@@ -19,6 +19,11 @@ exports.run = async (client, message, args) => {
                 `.replaceAll("CLIENT_PREFIX:", client.prefix)
                 );
             });
+    }
+    if (args[0] == "contribute") {
+        return message.channel.send(
+            "Do YOU want to contribute pricing data?\nWell, you can submit data to [this](https://forms.gle/8xAxaTWMu3HDY2P66) Google form. Submissions can be seen [here](https://docs.google.com/spreadsheets/d/1sq7uMNMGsw-kWebvVguOPagIRO-AnPtoaXd0vux-uUw/edit?usp=sharing) and [here](https://cdn.discordapp.com/attachments/345777754903674880/1411858405068640266/image.png?ex=68bec0da&is=68bd6f5a&hm=dc8f5a75cfe06ed630f6134080ea27e2dc034635bb2edaa5d175b71492e907bc&) is an example of how to properly fill out the form. Thank you for your contribution."
+        );
     }
     const combined = args.join(" ");
     let showtable = combined.includes("showtable");
@@ -75,8 +80,8 @@ exports.run = async (client, message, args) => {
                         closestInTable,
                     } = data;
                     let stringprice;
-                    if (estimatedPrice > 499) {
-                        stringprice = `a fair amount of (honestly no idea, sheet just says auction/rare )`;
+                    if (estimatedPrice > 499 && !combined.includes("bereal")) {
+                        stringprice = `a fair amount of (honestly no idea, sheet just says auction/rare, include \`bereal\` to be less ambigous)`;
                         closestInTable.val = "auction";
                         closestInTable.diff = "it";
                     } else if (estimatedPrice == 0) {

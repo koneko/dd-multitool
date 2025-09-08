@@ -1,7 +1,7 @@
 const priceTable = [
     {
         regex: /\b(?:thp|summoner|summ|thp armor|summoner armor|summ armor)\b/i,
-        returnKeyWord: "summoner piece",
+        returnKeyWord: "summoner/thp piece",
         prices: [
             "1000;10",
             "1050;12",
@@ -13,24 +13,36 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:dps|ab2|dps armor|ab2 armor)\b/i,
+        regex: /\b(?:dps ab1)\b/i,
+        returnKeyWord: "dps ab1",
+        prices: ["950;5", "1040;10"],
+    },
+    {
+        regex: /\b(?:dps|ab2|dps armor|ab2 armor|monk)\b/i,
         returnKeyWord: "dps/ab2 piece",
         prices: [
             "1400;20",
             "1450;35",
             "1500;50",
             "1550;75",
-            "1600;150",
+            "1600;250",
             "1650;500",
-            "1700;1000",
-            "1750;2000",
-            "1800;5000",
+            "1700;800",
+            "1750;1000",
+            "1800;2000",
         ],
     },
     {
-        regex: /\b(?:tb|ab1)\b/i,
+        regex: /\b(?:tb|ab1|tower boost|adept upper)\b/i,
         returnKeyWord: "tb/ab1 piece",
-        prices: ["980;5", "1050;15", "1100;40", "1150;70", "1200;500"],
+        prices: [
+            "980;5",
+            "1050;15",
+            "1100;40",
+            "1150;70",
+            "1173;150",
+            "1200;500",
+        ],
     },
     {
         regex: /\b(?:app builder staff|apprentice builder staff|app staff|apprentice staff)\b/i,
@@ -51,7 +63,7 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:app builder armor|apprentice builder armor|app builder piece|apprentice builder piece|app piece|apprentice piece|app builder|apprentice builder)\b/i,
+        regex: /\b(?:app builder armor|apprentice builder armor|app builder piece|apprentice builder piece|app piece|apprentice piece|app builder|apprentice builder|app)\b/i,
         returnKeyWord: "apprentice builder piece",
         prices: [
             "2000;25",
@@ -66,9 +78,40 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:aura|trange)\b/i,
+        regex: /\b(?:aura|trange|range)\b/i,
         returnKeyWord: "aura/trange piece",
-        prices: ["980;5", "1050;15", "1100;40", "1150;70", "1200;500"],
+        prices: [
+            "1000;5",
+            "1050;15",
+            "1100;25",
+            "1150;50",
+            "1200;100",
+            "1250;200",
+            "1300;300",
+        ],
+    },
+    {
+        regex: /\b(?:ev|tdmg|tdamage)\b/i,
+        returnKeyWord: "builder ev/tower damage piece",
+        prices: ["950;5", "1040;10"],
+    },
+    {
+        regex: /\b(?:cupid|lover's cupid)\b/i,
+        returnKeyWord: "cupid",
+        prices: [
+            "50000;5",
+            "51000;10",
+            "52000;15",
+            "53000;20",
+            "54000;50",
+            "55000;90",
+            "56000;110",
+        ],
+    },
+    {
+        regex: /\b(?:)\b/i,
+        returnKeyWord: "",
+        prices: ["950;5"],
     },
 ];
 
@@ -127,6 +170,23 @@ function weightedInterpolatePrice(pricesArr, inputNum, p = 2) {
     return lower.val + weight * (upper.val - lower.val);
 }
 
+function validateNum(input) {
+    const valid = /^(\d+(\.\d+)?)(k)?$/i.test(input);
+
+    if (!valid) {
+        return null;
+    }
+
+    const match = input.match(/^(\d+(\.\d+)?)(k)?$/i);
+    let number = parseFloat(match[1]);
+
+    if (match[3]) {
+        number *= 1000;
+    }
+
+    return parseInt(number.toString());
+}
+
 export const get = async (req, res) => {
     if (req.query.getPriceTable) {
         let tbl = [];
@@ -147,17 +207,20 @@ export const get = async (req, res) => {
     let returnKeyWord = "";
 
     combined.split(" ").forEach((arg) => {
-        if (!isNaN(parseInt(arg)) && gameValue == -1) {
-            gameValue = parseInt(arg);
+        if (gameValue == -1 && validateNum(arg)) {
+            gameValue = validateNum(arg);
         }
     });
 
-    if (gameValue == -1 && req.query.showTable == "false") {
+    if (
+        gameValue == -1 &&
+        (req.query.showTable == "false" || !req.query.showTable)
+    ) {
         return res.status(400).json({ error: "gameValue-not-found" });
     }
 
     priceTable.forEach((price, idx) => {
-        if (price.regex.test(combined) && !entryFound) {
+        if (price.regex.test(combined.trim()) && !entryFound) {
             entryFound = true;
             returnKeyWord = price.returnKeyWord;
             subtable = constructPriceSubTable(idx);
@@ -166,6 +229,9 @@ export const get = async (req, res) => {
                 weightedInterpolatePrice(subtable, gameValue)
             );
             if (closestInTable.idx == 0 && closestInTable.diff > 100) {
+                estimatedPrice = 0;
+            }
+            if (estimatedPrice < 0) {
                 estimatedPrice = 0;
             }
             if (estimatedPrice > 100000) {

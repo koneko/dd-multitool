@@ -49,7 +49,7 @@ exports.run = (client, message, args) => {
             )
         );
 
-    message.channel.send(
+    return message.channel.send(
         `With **${tbPoints}** points in your tower boost, you will boost towers with a **${get_damage_multiplier(
             tbPoints
         ).toFixed(4)}** multiplier.`

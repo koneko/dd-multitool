@@ -19,7 +19,6 @@ exports.run = (client, message, args) => {
     fetch(client.sharedEndpoint + "knowledge?topic=" + topic)
         .then((d) => d.json())
         .then((data) => {
-            console.log(data);
             if (data.error == "topic-not-found") {
                 return message.channel.send(
                     "Could not find data entry for the given topic. consult `CLIENT_PREFIX:help kb`.".replaceAll(
@@ -43,6 +42,6 @@ exports.run = (client, message, args) => {
             embed.setTitle(title);
             embed.setDescription(content);
             embed.setColor("Green");
-            message.channel.send({ embeds: [embed] });
+            return message.channel.send({ embeds: [embed] });
         });
 };

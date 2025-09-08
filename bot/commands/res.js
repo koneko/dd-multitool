@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
         .then((data) => {
             const { resUpgrades, mainStat, subStat, bonus } = data;
             logger.info(resUpgrades, mainStat, subStat, bonus);
-            message.channel.send(
+            return message.channel.send(
                 `With ${resUpgrades} upgrades spent in resistances, your piece will reach ${
                     mainStat + subStat
                 }, or ${bonus} with set bonus!`

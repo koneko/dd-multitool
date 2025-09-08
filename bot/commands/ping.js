@@ -16,7 +16,7 @@ exports.example = "CLIENT_PREFIX:ping";
 exports.hidden = true;
 exports.isAlias = false;
 exports.run = async (client, message, args) => {
-    message.channel.send("Fetching data...").then((m) => {
+    return message.channel.send("Fetching data...").then((m) => {
         m.edit(
             `🏓 Latency is **${
                 m.createdTimestamp - message.createdTimestamp

@@ -53,5 +53,5 @@ exports.run = (client, message, args) => {
             });
     }
     embed.setColor(0x00ff00);
-    message.channel.send({ embeds: [embed] });
+    return message.channel.send({ embeds: [embed] });
 };

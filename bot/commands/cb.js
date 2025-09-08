@@ -29,5 +29,7 @@ exports.run = (client, message, args) => {
         ups = ups - t;
     }
     let resnum = cb + ups * 192;
-    message.channel.send(`Your Calamity Blade will hit **${resnum}** damage.`);
+    return message.channel.send(
+        `Your Calamity Blade will hit **${resnum}** damage.`
+    );
 };

@@ -48,7 +48,7 @@ exports.run = (client, message, args) => {
             )
         );
 
-    message.channel.send(
+    return message.channel.send(
         `With **${hbPoints}** points in your hero boost, you will boost with a **${get_damage_multiplier(
             hbPoints
         ).toFixed(4)}** damage multiplier.`

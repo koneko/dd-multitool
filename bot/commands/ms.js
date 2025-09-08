@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
         log.info(t);
         ups = ups - t;
     }
-    message.channel.send(
+    return message.channel.send(
         `Your Moon Staff will hit ${moonstaff + ups * 99} damage.`
     );
 };

@@ -24,7 +24,7 @@ exports.run = (client, message, args) => {
     let extraboost = Math.floor(levels / 3 - 3);
     let players = Math.floor(levels / 29) + 1;
     if (players > 4) players = 4;
-    message.channel.send(
+    return message.channel.send(
         `Your cat's boost should be atleast **${
             boost + extraboost
         }**. It will boost atleast **${players}** players.`

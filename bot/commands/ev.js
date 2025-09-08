@@ -104,7 +104,7 @@ exports.run = (client, message, args) => {
 
     const distribution = findOptimalDistribution(total);
 
-    message.channel.send(
+    return message.channel.send(
         `You should aim for **${
             Math.round(distribution.hdmg) - 3
         }** hero damage and **${

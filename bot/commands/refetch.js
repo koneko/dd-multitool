@@ -18,10 +18,12 @@ exports.run = async (client, message, args) => {
             return { userId, emoji };
         });
 
-        message.channel.send(
+        return message.channel.send(
             "Refetched react data. " + JSON.stringify(client.usersToReactTo)
         );
     } catch (e) {
-        message.channel.send("copyparty instance unreachable/offline...");
+        return message.channel.send(
+            "copyparty instance unreachable/offline..."
+        );
     }
 };

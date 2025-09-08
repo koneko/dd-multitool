@@ -33,8 +33,8 @@ exports.run = (client, message, args) => {
         if (arg > 2000) arg = 2000; // just dont bother for anything higher than 2000
         sum += parseInt(arg);
     });
-    sum--;
-    message.channel.send(
+    if (args.length > 1) sum--;
+    return message.channel.send(
         `Will reach ${sum}, ${Math.ceil(sum * 1.4)} with bonus.`
     );
 };

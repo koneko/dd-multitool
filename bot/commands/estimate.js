@@ -69,7 +69,7 @@ exports.run = async (client, message, args) => {
                             entry.val +
                             "\n";
                     });
-                    message.channel.send(
+                    return message.channel.send(
                         `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``
                     );
                 } else {
@@ -89,14 +89,14 @@ exports.run = async (client, message, args) => {
                     } else {
                         stringprice = `**${estimatedPrice}**`;
                     }
-                    message.channel.send(
+                    return message.channel.send(
                         `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG. Take this estimation with a grain of salt.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
                     );
                 }
             }
         })
         .catch((e) => {
-            message.channel.send(
+            return message.channel.send(
                 "Fetch from API returned error with `" + e + "`"
             );
         });

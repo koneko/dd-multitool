@@ -1,21 +1,25 @@
-name: Test, build and deploy to production
+name: CI Pipeline
 
 on:
     push:
         branches:
             - main
 
+# ddmt-prod is label for ubuntu-latest
 jobs:
-    test-api:
-        runs-on: ubuntu-latest
+    check-commit-message:
+        runs-on: ddmt-prod
+        outputs:
+            skip: ${{ steps.skip_check.outputs.skip }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 1
 
-            - name: Check commit message for skiptests
+            - name: Check latest commit message for skiptests
               id: skip_check
               run: |
-                  echo "Checking commit message..."
                   LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
                   echo "Last commit message: $LAST_COMMIT_MSG"
                   if [[ "$LAST_COMMIT_MSG" == *"skiptests"* ]]; then
@@ -24,57 +28,69 @@ jobs:
                     echo "skip=false" >> $GITHUB_OUTPUT
                   fi
 
-            - name: Skip tests if commit contains skiptests
-              if: steps.skip_check.outputs.skip == 'true'
-              run: |
-                  echo "Skipping tests due to commit message containing 'skiptests'"
-                  exit 0
-
-            - name: Setup Node
-              if: steps.skip_check.outputs.skip != 'true'
+    test-api:
+        needs: check-commit-message
+        if: needs.check-commit-message.outputs.skip != 'true'
+        runs-on: ddmt-prod
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: 20
-
             - name: Install API dependencies
-              if: steps.skip_check.outputs.skip != 'true'
               working-directory: ./api
-              run: npm install
-
+              run: npm install --include=dev
             - name: Run API tests
-              if: steps.skip_check.outputs.skip != 'true'
               working-directory: ./api
               run: npm test
 
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        needs: test-api
-        env:
-            TOKEN: ${{ secrets.TOKEN }}
-            PREFIX: ${{ secrets.PREFIX }}
-            AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-            DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
-            DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
+    test-bot:
+        needs: check-commit-message
+        if: needs.check-commit-message.outputs.skip != 'true'
+        runs-on: ddmt-prod
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+            - uses: actions/checkout@v3
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
               with:
-                  fetch-depth: 2
+                  node-version: 20
+            - name: Install Bot dependencies
+              working-directory: ./bot
+              run: npm install --include=dev
+            - name: Run Bot tests
+              working-directory: ./bot
+              run: npm test
 
-            - name: Build containers
-              run: bash ./containers-build.sh
+        build-and-deploy:
+            runs-on: ddmt-prod
+            needs: [test-api, test-bot]
+            env:
+                TOKEN: ${{ secrets.TOKEN }}
+                PREFIX: ${{ secrets.PREFIX }}
+                AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+                DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
+                DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
+            steps:
+                - name: Checkout code
+                  uses: actions/checkout@v3
+                  with:
+                      fetch-depth: 2
 
-            - name: Restart changed containers
-              if: success()
-              run: |
-                  if [ -f changed_services.txt ]; then
-                    for service in $(cat changed_services.txt); do
-                      echo "Restarting $service..."
-                      docker compose up -d --force-recreate $service
-                    done
-                  else
-                    echo "No containers need restarting."
-                  fi
+                - name: Build containers
+                  run: bash ./containers-build.sh
 
-            - name: Cleanup old images
-              run: docker image prune -f
+                - name: Restart changed containers
+                  if: success()
+                  run: |
+                      if [ -f changed_services.txt ]; then
+                        for service in $(cat changed_services.txt); do
+                          echo "Restarting $service..."
+                          docker compose up -d --force-recreate $service
+                        done
+                      else
+                        echo "No containers need restarting."
+                      fi
+
+                - name: Cleanup old images
+                  run: docker image prune -f

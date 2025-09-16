@@ -6,6 +6,7 @@ import auth from "auth-astro";
 
 export default defineConfig({
     output: "server",
+    publicDir: "./public",
 
     adapter: node({
         mode: "standalone",

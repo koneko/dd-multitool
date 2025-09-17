@@ -167,7 +167,7 @@ const priceTable = [
     {
         regex: /\b(?:gw armor|gw|gunwitch|gunwitch armor)\b/i,
         returnKeyWord: "gunwitch armor",
-        prices: ["1484;35", "1500;40", "1550;60"],
+        prices: ["1484;35", "1500;40", "1550;60", "1600;250", "1700;500"],
     },
     {
         regex: /\b(?:witch's broom|broom|witch broom)\b/i,

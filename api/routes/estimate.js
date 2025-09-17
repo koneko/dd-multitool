@@ -15,7 +15,7 @@ const priceTable = [
     {
         regex: /\b(?:dps ab1)\b/i,
         returnKeyWord: "dps ab1",
-        prices: ["1400;20", "1500;40", "1550;60", "1600;100"],
+        prices: ["1400;20", "1500;40", "1550;60", "1600;100", "1770;1500"],
     },
     {
         regex: /\b(?:ab1 genie)\b/i,

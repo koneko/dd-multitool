@@ -40,10 +40,7 @@ export const get = async (req, res) => {
     let resUpgrades = 0;
     resistances.forEach((res) => {
         if (res == null) return;
-        if (res > 29)
-            return message.channel.send(
-                "Please provide a number less than 29 for resistances."
-            );
+        if (res > 29) res = 29;
         if (res < 29) {
             if (res < 0) {
                 let underzero = Math.abs(res);

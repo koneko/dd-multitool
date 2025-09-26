@@ -30,21 +30,24 @@ exports.run = async (client, message, args) => {
     if (!mainStat1 || !upgrades)
         return message.channel.send("Please provide atleast 2 stats.");
     if (!substat) substat = 0;
-    fetch(
-        client.sharedEndpoint +
-            "resistances" +
-            `?mainStat=${mainStat1}&upgrades=${upgrades}&subStat=${substat}&resistances=${JSON.stringify(
-                resistances
-            )}`
-    )
-        .then((d) => d.json())
-        .then((data) => {
-            const { resUpgrades, mainStat, subStat, bonus } = data;
-            logger.info(resUpgrades, mainStat, subStat, bonus);
-            return message.channel.send(
-                `With ${resUpgrades} upgrades spent in resistances, your piece will reach ${
-                    mainStat + subStat
-                }, or ${bonus} with set bonus!`
-            );
-        });
+    try {
+        const result = await fetch(
+            client.sharedEndpoint +
+                "resistances" +
+                `?mainStat=${mainStat1}&upgrades=${upgrades}&subStat=${substat}&resistances=${JSON.stringify(
+                    resistances
+                )}`
+        );
+        const data = await result.json();
+        const { resUpgrades, mainStat, subStat, bonus } = data;
+        return message.channel.send(
+            `With ${resUpgrades} upgrades spent in resistances, your piece will reach ${
+                mainStat + subStat
+            }, or ${bonus} with set bonus!`
+        );
+    } catch (e) {
+        return message.channel.send(
+            "Fetch from resistances API returned error with `" + e + "`"
+        );
+    }
 };

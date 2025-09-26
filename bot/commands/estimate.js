@@ -31,73 +31,69 @@ exports.run = async (client, message, args) => {
         require("./help").run(client, message, ["estimate"]);
         return;
     }
-
-    fetch(
-        client.sharedEndpoint +
-            "estimate" +
-            `?q=${combined}&showTable=` +
-            showtable
-    )
-        .then((d) => d.json())
-        .then((data) => {
-            if (data.error) {
-                if (data.error == "entry-not-found")
-                    return message.channel.send(
-                        "Your query couldn't be matched with anything, please refine your query or reffer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(
-                            "CLIENT_PREFIX:",
-                            client.prefix
-                        )
-                    );
-                if (data.error == "gameValue-not-found")
-                    return message.channel.send(
-                        "Your query did not contain a gameValue, please consult `CLIENT_PREFIX:help estimate`.".replaceAll(
-                            "CLIENT_PREFIX:",
-                            client.prefix
-                        )
-                    );
-                if (data.error == "")
-                    return message.channel.send(
-                        "API query is somehow empty, but did not error for `entry-not-found`, please contact shiro."
-                    );
+    try {
+        const result = await fetch(
+            client.sharedEndpoint +
+                "estimate" +
+                `?q=${combined}&showTable=` +
+                showtable
+        );
+        const data = await result.json();
+        if (data.error) {
+            if (data.error == "entry-not-found")
+                return message.channel.send(
+                    "Your query couldn't be matched with anything, please refine your query or reffer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(
+                        "CLIENT_PREFIX:",
+                        client.prefix
+                    )
+                );
+            if (data.error == "gameValue-not-found")
+                return message.channel.send(
+                    "Your query did not contain a gameValue, please consult `CLIENT_PREFIX:help estimate`.".replaceAll(
+                        "CLIENT_PREFIX:",
+                        client.prefix
+                    )
+                );
+            if (data.error == "")
+                return message.channel.send(
+                    "API query is somehow empty, but did not error for `entry-not-found`, please contact shiro."
+                );
+        } else {
+            if (showtable) {
+                const { returnKeyWord, subtable } = data;
+                let res = "";
+                subtable.forEach((entry) => {
+                    res +=
+                        String(entry.number).padEnd(14, " ") + entry.val + "\n";
+                });
+                return message.channel.send(
+                    `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``
+                );
             } else {
-                if (showtable) {
-                    const { returnKeyWord, subtable } = data;
-                    let res = "";
-                    subtable.forEach((entry) => {
-                        res +=
-                            String(entry.number).padEnd(14, " ") +
-                            entry.val +
-                            "\n";
-                    });
-                    return message.channel.send(
-                        `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``
-                    );
+                const {
+                    gameValue,
+                    estimatedPrice,
+                    returnKeyWord,
+                    closestInTable,
+                } = data;
+                let stringprice;
+                if (estimatedPrice > 499 && !combined.includes("bereal")) {
+                    stringprice = `a fair amount of (honestly no idea, sheet just says auction/rare, include \`bereal\` to be less ambigous)`;
+                    closestInTable.val = "auction";
+                    closestInTable.diff = "it";
+                } else if (estimatedPrice == 0) {
+                    stringprice = "**0** (<:TavKeep:1179145911180480563>)";
                 } else {
-                    const {
-                        gameValue,
-                        estimatedPrice,
-                        returnKeyWord,
-                        closestInTable,
-                    } = data;
-                    let stringprice;
-                    if (estimatedPrice > 499 && !combined.includes("bereal")) {
-                        stringprice = `a fair amount of (honestly no idea, sheet just says auction/rare, include \`bereal\` to be less ambigous)`;
-                        closestInTable.val = "auction";
-                        closestInTable.diff = "it";
-                    } else if (estimatedPrice == 0) {
-                        stringprice = "**0** (<:TavKeep:1179145911180480563>)";
-                    } else {
-                        stringprice = `**${estimatedPrice}**`;
-                    }
-                    return message.channel.send(
-                        `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG. Take this estimation with a grain of salt.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
-                    );
+                    stringprice = `**${estimatedPrice}**`;
                 }
+                return message.channel.send(
+                    `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG. Take this estimation with a grain of salt.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
+                );
             }
-        })
-        .catch((e) => {
-            return message.channel.send(
-                "Fetch from API returned error with `" + e + "`"
-            );
-        });
+        }
+    } catch (e) {
+        return message.channel.send(
+            "Fetch from API returned error with `" + e + "`"
+        );
+    }
 };

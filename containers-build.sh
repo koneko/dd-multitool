@@ -8,14 +8,14 @@ echo "Latest commit message: $COMMIT_MSG"
 # If commit message contains "rebuild", rebuild everything
 if echo "$COMMIT_MSG" | grep -iq "rebuild"; then
   echo "Commit contains 'rebuild': rebuilding all containers"
-  CHANGED_DIRS=("bot" "api" "web")
+  CHANGED_DIRS=("bot" "api" "web" "analytics")
 else
   # Detect changed directories safely
   if git rev-parse HEAD~1 >/dev/null 2>&1; then
     CHANGED_DIRS=($(git diff --name-only HEAD~1 HEAD | cut -d/ -f1 | sort -u))
   else
     echo "No previous commit detected, building all containers"
-    CHANGED_DIRS=("bot" "api" "web")
+    CHANGED_DIRS=("bot" "api" "web" "analytics")
   fi
 fi
 
@@ -44,3 +44,4 @@ rm -f changed_services.txt
 build_if_changed "bot" "dd-multitool-bot:latest" "bot"
 build_if_changed "api" "dd-multitool-api:latest" "api"
 build_if_changed "web" "dd-multitool-web:latest" "web"
+build_if_changed "analytics" "dd-multitool-analytics:latest" "analytics"

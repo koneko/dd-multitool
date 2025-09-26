@@ -68,6 +68,11 @@ jobs:
         env:
             TOKEN: ${{ secrets.TOKEN }}
             PREFIX: ${{ secrets.PREFIX }}
+            ANALYTICS_TOKEN: ${{ secrets.ANALYTICS_TOKEN }}
+            ANALYTICS_PREFIX: ${{ secrets.ANALYTICS_PREFIX }}
+            ANALYTICS_LOG_CHANNEL_ID: ${{ secrets.ANALYTICS_LOG_CHANNEL_ID }}
+            MONGODB_ROOT_USERNAME: ${{ secrets.MONGODB_ROOT_USERNAME }}
+            MONGODB_ROOT_PASSWORD: ${{ secrets.MONGODB_ROOT_PASSWORD }}
             AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
             DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
             DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
@@ -79,6 +84,15 @@ jobs:
 
             - name: Build containers
               run: bash ./containers-build.sh
+
+            - name: Ensure MongoDB is running
+              run: |
+                  if [ "$(docker ps -q -f name=mongodb)" ]; then
+                    echo "MongoDB is already running."
+                  else
+                    echo "MongoDB is not running. Starting it..."
+                    docker compose up -d mongodb
+                  fi
 
             - name: Restart changed containers
               if: success()

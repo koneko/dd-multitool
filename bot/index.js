@@ -1,6 +1,7 @@
 const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
 const fs = require("fs");
 const log = require("./log");
+const analytics = require("./analytics");
 let cfg = {};
 try {
     cfg = require("./config.json");
@@ -9,6 +10,7 @@ try {
         "config.json not found or invalid. Falling back to environment variables."
     );
 }
+const url = "https://drive.overflow.fun/public/react.json";
 const token = process.env.TOKEN || cfg.TOKEN;
 const prefix = process.env.PREFIX || cfg.PREFIX;
 const client = new Client({
@@ -25,10 +27,42 @@ const DDRNG_ALLOWED_CHANNELS = [
 ];
 const BLACKLISTED_USERS_IDS = [1054183205726588988]; // so far only Joann rule
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
+const QUOTES = [
+    "tboob is too rare, i hope this is good enough for you",
+    "Banned <@399275582401282048> ",
+    "Muted {author} for 67 seconds",
+    "why am i half-paid? i demand no pay! no pay!",
+    "time to hop on RL RG PS for the 500th time today, wish me luck :pepega:",
+    "yes, sesar IS drunk again",
+    "thank you {author} for your many contributions to this community",
+    "@mods plez ban haker, he haking",
+    "tigi: >.<",
+    "mrrp mrrp meow",
+    "tbolt is a gamer who rawdogs rust",
+    "if you see this, good for you :)",
+    "have a cookie :cookie:",
+    "With 21 upgrades spent in resistances, your piece will reach 1285, or 1800 with set bonus! :tada:",
+    "WOAH, **I** am replying to Tbot's command? DAMN THATS CRAZY",
+    ":nerd: the chance of getting a reply is 1/10 :nerd:",
+    "i sometimes choose not to react, teehee :P",
+    "mmm i love ++ items :yum:",
+    "I NEED MORE PRICING DATA! AAAAAAAAAAAAAAAAAA",
+    "im just as good as tbot i swear :sob:",
+    "wow you actually got this, check my about me to invite me to YOUR server!",
+    "1/10 chance i say, 1/10.",
+    "hop on gtfo",
+    "any @TWA gamers?",
+    "any poly gamers?",
+    "Muted <@837309149271425027> for 1 hour, disobedient :(",
+];
+
 client.commands = new Collection();
 client.ownerID = 263247134147608578;
 client.prefix = prefix;
+client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;
+client.usersToReactTo = [];
+
 if (!client.sharedEndpoint)
     return log.error(
         "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined."
@@ -45,8 +79,6 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
-const url = "https://drive.overflow.fun/public/react.json";
-client.usersToReactTo = [];
 client.once(Events.ClientReady, async (readyClient) => {
     try {
         const res = await fetch(url);
@@ -77,7 +109,15 @@ client.on(Events.MessageCreate, async (message) => {
             }
         }
     });
-
+    if (message.content == "<<sesarisdrunkagain") {
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+        const quote = QUOTES[random(0, QUOTES.length - 1)];
+        const rand = random(1, 12);
+        if (rand != 1 && message.author.id != client.authorID) return;
+        message.reply(quote.replace("{author}", `<@${message.author.id}>`));
+    }
     if (
         message.content.indexOf(prefix) !== 0 &&
         message.guildId != WHEELCHAIRS_GUILD_ID
@@ -95,7 +135,8 @@ client.on(Events.MessageCreate, async (message) => {
         const cmd = client.commands.get(command);
         if (!cmd) return;
         try {
-            await cmd.run(client, message, args);
+            const a = await cmd.run(client, message, args);
+            log.info(a);
         } catch (e) {
             message.channel.send(
                 "Command " + cmd.name + " exited with an exception: " + e
@@ -105,7 +146,8 @@ client.on(Events.MessageCreate, async (message) => {
     }
     if (
         message.guildId == DDRNG_GUILD_ID &&
-        !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId)
+        !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId) &&
+        message.author.id != client.ownerID
     )
         return;
 
@@ -120,11 +162,23 @@ client.on(Events.MessageCreate, async (message) => {
             let uid = BLACKLISTED_USERS_IDS[i];
             if (message.author.id == uid)
                 return message.channel.send(
-                    "`You are prohibited from using this bot. Good luck elsewhere!`"
+                    "`You are prohibited from using this bot.!`"
                 );
         }
-        await cmd.run(client, message, args);
+        const cmdResult = await cmd.run(client, message, args);
+        if (cmdResult.content == "") cmdResult.content = "Embeded result.";
+        analytics(
+            message.author.username,
+            message.author.id,
+            message.author.avatarURL(),
+            cmd.name,
+            args,
+            cmdResult.content,
+            message.author.displayName,
+            client.analyticsEndpoint
+        );
     } catch (e) {
+        console.log(e);
         message.channel.send(
             "Command " + cmd.name + " exited with an exception: " + e
         );

@@ -91,6 +91,16 @@ client.once(Events.ClientReady, async (readyClient) => {
     } catch (e) {
         console.warn("copyparty is offline, wont work.");
     }
+
+    client.user.setPresence({
+        activities: [
+            {
+                name: `pay me a fair salary! prefix is ${client.prefix}.`,
+                type: ActivityType.Custom,
+            },
+        ],
+        status: "online",
+    });
     log.info(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 

@@ -160,7 +160,7 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:ult acc|ultimate accessory|ultimate acc)\b/i,
+        regex: /\b(?:ult acc|ultimate accessory|ultimate acc|acc|ult accessory)\b/i,
         returnKeyWord: "ultimate accessory",
         prices: ["500;5", "520;150", "540;250"],
     },

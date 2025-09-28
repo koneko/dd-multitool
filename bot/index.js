@@ -1,4 +1,10 @@
-const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+const {
+    Client,
+    Events,
+    GatewayIntentBits,
+    Collection,
+    ActivityType,
+} = require("discord.js");
 const fs = require("fs");
 const log = require("./log");
 const analytics = require("./analytics");

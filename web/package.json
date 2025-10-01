@@ -9,9 +9,9 @@
         "astro": "astro"
     },
     "dependencies": {
-        "@astrojs/node": "^9.4.3",
+        "@astrojs/node": "^9.4.4",
         "@auth/core": "^0.37.4",
-        "astro": "^5.13.5",
+        "astro": "^5.14.1",
         "auth-astro": "^4.2.0",
         "pixi.js": "^8.13.1"
     }

@@ -131,7 +131,7 @@ client.on(Events.MessageCreate, async (message) => {
         }
         const quote = QUOTES[random(0, QUOTES.length - 1)];
         const rand = random(1, 12);
-        if (rand != 1 && message.author.id != client.authorID) return;
+        if (rand != 1 && message.author.id != client.ownerID) return;
         message.reply(quote.replace("{author}", `<@${message.author.id}>`));
     }
     if (

@@ -41,7 +41,7 @@ const QUOTES = [
     "time to hop on RL RG PS for the 500th time today, wish me luck :pepega:",
     "yes, sesar IS drunk again",
     "thank you {author} for your many contributions to this community",
-    "@mods plez ban haker, he haking",
+    "no.",
     "tigi: >.<",
     "mrrp mrrp meow",
     "tbolt is a gamer who rawdogs rust",
@@ -52,14 +52,16 @@ const QUOTES = [
     ":nerd: the chance of getting a reply is 1/10 :nerd:",
     "i sometimes choose not to react, teehee :P",
     "mmm i love ++ items :yum:",
-    "I NEED MORE PRICING DATA! AAAAAAAAAAAAAAAAAA",
+    "stop it >:(",
     "im just as good as tbot i swear :sob:",
-    "wow you actually got this, check my about me to invite me to YOUR server!",
+    "i feel ill at ease... almost like sesar is drunk, again.",
     "1/10 chance i say, 1/10.",
     "hop on gtfo",
     "any @TWA gamers?",
     "any poly gamers?",
+    "im busy making divine crystals, go away :disappointed:",
     "Muted <@837309149271425027> for 1 hour, disobedient :(",
+    "thank you for reporting a mana hacker, please contact obama for a free event item (bling bling bracers)",
 ];
 
 client.commands = new Collection();
@@ -146,7 +148,7 @@ client.on(Events.MessageCreate, async (message) => {
         let cprefix = "<<";
         if (message.content.indexOf(cprefix) !== 0) return;
         const args = message.content.slice(cprefix.length).trim().split(/ +/g);
-        console.log(args);
+        log.info(args);
         const command = args.shift().toLowerCase();
         const cmd = client.commands.get(command);
         if (!cmd) return;
@@ -194,10 +196,15 @@ client.on(Events.MessageCreate, async (message) => {
             client.analyticsEndpoint
         );
     } catch (e) {
-        console.log(e);
-        message.channel.send(
-            "Command " + cmd.name + " exited with an exception: " + e
-        );
+        try {
+            log.info(e);
+            message.channel.send(
+                "Command " + cmd.name + " exited with an exception: " + e
+            );
+        } catch (e2) {
+            log.info("Could not send error message to server.");
+            log.info(e2);
+        }
     }
 });
 

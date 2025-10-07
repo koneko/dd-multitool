@@ -183,7 +183,11 @@ client.on(Events.MessageCreate, async (message) => {
                     "`You are prohibited from using this bot.!`"
                 );
         }
-        const cmdResult = await cmd.run(client, message, args);
+        let cmdResult = await cmd.run(client, message, args);
+        if (!cmdResult)
+            cmdResult = {
+                content: "Command did not analytics friendly response.",
+            };
         if (cmdResult.content == "") cmdResult.content = "Embeded result.";
         analytics(
             message.author.username,

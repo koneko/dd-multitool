@@ -186,7 +186,8 @@ client.on(Events.MessageCreate, async (message) => {
         let cmdResult = await cmd.run(client, message, args);
         if (!cmdResult)
             cmdResult = {
-                content: "Command did not analytics friendly response.",
+                content:
+                    "Command did not return an analytics friendly response.",
             };
         if (cmdResult.content == "") cmdResult.content = "Embeded result.";
         analytics(

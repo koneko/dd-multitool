@@ -13,17 +13,17 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:dps ab1)\b/i,
+        regex: /\b(?:ab1)\b/i,
         returnKeyWord: "dps ab1",
         prices: ["1400;20", "1500;40", "1550;60", "1600;100", "1770;1500"],
     },
     {
-        regex: /\b(?:ab1 genie)\b/i,
-        returnKeyWord: "ab1 genie",
+        regex: /\b(?:genie)\b/i,
+        returnKeyWord: "genie",
         prices: ["833;55", "900;100", "999;130"],
     },
     {
-        regex: /\b(?:dps|ab2|dps armor|ab2 armor|monk)\b/i,
+        regex: /\b(?:dps|ab2|dps armor|ab2 armor)\b/i,
         returnKeyWord: "dps/ab2 piece",
         prices: [
             "1400;20",
@@ -38,7 +38,7 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:tb|ab1|tower boost|adept upper)\b/i,
+        regex: /\b(?:tb|tower boost|adept upper)\b/i,
         returnKeyWord: "tb/ab1 piece",
         prices: [
             "980;5",
@@ -83,7 +83,7 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:aura|trange|range)\b/i,
+        regex: /\b(?:aura|trange|range|monk)\b/i,
         returnKeyWord: "aura/trange piece",
         prices: [
             "1000;5",
@@ -200,6 +200,7 @@ const priceTable = [
         regex: /\b(?:calamity blade|cblade|cb)\b/i,
         returnKeyWord: "calamity blade",
         prices: [
+            "96000;20",
             "99000;40",
             "102000;75",
             "103000;100",

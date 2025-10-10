@@ -72,6 +72,7 @@ export const prerender = true;
             />
             <input type="number" id="secondary-stat" placeholder="0" />
         </div>
+        <div><button id="clear-btn">Clear</button></div>
     </div>
 </div>
 <p id="resOutput"></p>
@@ -141,6 +142,16 @@ export const prerender = true;
     heroStatElement.oninput = checkAndUpdateStats;
     upgradesElement.oninput = checkAndUpdateStats;
     secondaryStatElement.oninput = checkAndUpdateStats;
+
+    document.getElementById("clear-btn").onclick = () => {
+        generic.value = "";
+        fire.value = "";
+        lightning.value = "";
+        poison.value = "";
+        heroStatElement.value = "";
+        upgradesElement.value = "";
+        secondaryStatElement.value = "";
+    };
 
     function checkAndUpdateResistances() {
         if (parseInt(generic.value) > 29) generic.value = "29";

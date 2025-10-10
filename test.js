@@ -22,7 +22,7 @@ map_ids[4] = "CAMPST";
 map_ids[5] = "CAMPAR"; //
 map_ids[6] = "VDAY01";
 map_ids[7] = "VDAY02";
-map_ids[8] = "CDTTOE"; // Temple of Etheria
+map_ids[8] = "CDTTOE"; // Tomb of Etheria
 map_ids[9] = "CDMAGE"; //
 map_ids[10] = "CAMPTD"; //
 map_ids[11] = "CDTINF";
@@ -59,14 +59,14 @@ map_ids[41] = "CDCTWR";
 map_ids[42] = "CDTTOP"; // Temple of Polybius
 map_ids[43] = "SKYSPK"; // Sky Spooktacular
 map_ids[44] = "CDTEGG"; // Eternia Gauntlet ??
-map_ids[45] = "CAMPSC"; // Sky city??
+map_ids[45] = "CAMPSC"; // Sky city ??
 map_ids[46] = "SPECTH";
 map_ids[47] = "SPECT2";
-map_ids[48] = "CDTWIM";
+map_ids[48] = "CDTWIM"; 
 map_ids[49] = "CAMPX2"; //
 map_ids[50] = "SPECXM"; // SOME XMAS MAP
 map_ids[51] = "SPECX2"; // SOME XMAS MAP
-map_ids[52] = "SPECTI";
+map_ids[52] = "SPECTI"; // Tavern Incursion ??
 
 // Read directory for .upk files
 const upkFiles = fs

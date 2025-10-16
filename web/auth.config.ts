@@ -9,5 +9,5 @@ export default defineConfig({
             clientSecret: import.meta.env.DDMT_WEB_CLIENT_SECRET,
         }),
     ],
-    // secret: import.meta.env.AUTH_SECRET,
+    secret: import.meta.env.AUTH_SECRET || process.env.AUTH_SECRET,
 });

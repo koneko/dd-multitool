@@ -10,10 +10,16 @@ const session = await getSession(Astro.request);
 if (!session) {
     return Astro.redirect("/");
 }
+
+import { connectToDatabase } from "../../lib/db";
+import { Build } from "../../lib/models/build";
+await connectToDatabase();
+const builds = await Build.find();
 ---
 
 <Layout>
     <h1>Choose a map</h1>
+    <p>{JSON.stringify(builds)}</p>
     <GridContainer>
         {
             maps.map((item, idx) => (

@@ -17,6 +17,10 @@ services:
             - AUTH_SECRET=${AUTH_SECRET}
             - AUTH_TRUST_HOST=true
             - AUTH_URL=https://ddmt.overflow.fun
+            - MONGO_USERNAME=${MONGODB_ROOT_USERNAME}
+            - MONGO_PASSWORD=${MONGODB_ROOT_PASSWORD}
+            - MONGO_URI=mongodb:27017
+            - MONGO_DATABASE=prod_database
         networks:
             - dundef-tool
         depends_on:

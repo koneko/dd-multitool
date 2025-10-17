@@ -13,20 +13,15 @@ const mongoPassword =
 const mongoURI = import.meta.env.MONGO_URI || process.env.MONGO_URI;
 const mongoDatabase =
     import.meta.env.MONGO_DATABASE || process.env.MONGO_DATABASE;
-
-console.log("meta db" + import.meta.env.MONGO_DATABASE);
-console.log("process db" + process.env.MONGO_DATABASE);
-console.log(
-    "mongodb://" +
-        `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`
-);
 export async function connectToDatabase() {
     if (cached.conn) return cached.conn;
     if (!cached.promise) {
         cached.promise = mongoose
             .connect(
-                "mongodb://" +
-                    `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`,
+                encodeURI(
+                    "mongodb://" +
+                        `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`
+                ),
                 { bufferCommands: false }
             )
             .then((mongoose) => mongoose);

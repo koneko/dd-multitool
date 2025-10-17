@@ -14,7 +14,8 @@ const mongoURI = import.meta.env.MONGO_URI || process.env.MONGO_URI;
 const mongoDatabase =
     import.meta.env.MONGO_DATABASE || process.env.MONGO_DATABASE;
 
-console.log(mongoUsername);
+console.log("meta db" + import.meta.env.MONGO_DATABASE);
+console.log("process db" + process.env.MONGO_DATABASE);
 export async function connectToDatabase() {
     if (cached.conn) return cached.conn;
     if (!cached.promise) {

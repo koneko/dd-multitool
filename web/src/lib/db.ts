@@ -17,13 +17,11 @@ export async function connectToDatabase() {
     if (cached.conn) return cached.conn;
     if (!cached.promise) {
         cached.promise = mongoose
-            .connect(
-                "mongodb://" +
-                    `${encodeURIComponent(mongoUsername)}:${encodeURIComponent(
-                        mongoPassword
-                    )}@${mongoURI}/${mongoDatabase}`,
-                { bufferCommands: false }
-            )
+            .connect("mongodb://" + `${mongoURI}/${mongoDatabase}`, {
+                bufferCommands: false,
+                user: mongoUsername,
+                pass: mongoPassword,
+            })
             .then((mongoose) => mongoose);
     }
 

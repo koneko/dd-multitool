@@ -16,6 +16,10 @@ const mongoDatabase =
 
 console.log("meta db" + import.meta.env.MONGO_DATABASE);
 console.log("process db" + process.env.MONGO_DATABASE);
+console.log(
+    "mongodb://" +
+        `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`
+);
 export async function connectToDatabase() {
     if (cached.conn) return cached.conn;
     if (!cached.promise) {

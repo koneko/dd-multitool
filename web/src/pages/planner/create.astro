@@ -11,6 +11,8 @@ if (!session) {
     return Astro.redirect("/");
 }
 
+console.log("meta db " + import.meta.env.MONGO_DATABASE);
+console.log("process db " + process.env.MONGO_DATABASE);
 import { connectToDatabase } from "../../lib/db";
 import { Build } from "../../lib/models/build";
 await connectToDatabase();

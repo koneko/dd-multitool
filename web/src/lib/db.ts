@@ -18,7 +18,7 @@ export async function connectToDatabase() {
     if (!cached.promise) {
         cached.promise = mongoose
             .connect(
-                encodeURI(
+                encodeURIComponent(
                     "mongodb://" +
                         `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`
                 ),

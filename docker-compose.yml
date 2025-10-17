@@ -25,6 +25,7 @@ services:
             - dundef-tool
         depends_on:
             - api
+            - mongodb
         ports:
             - "8080:4321"
         healthcheck:

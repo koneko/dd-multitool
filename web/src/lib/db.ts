@@ -18,10 +18,10 @@ export async function connectToDatabase() {
     if (!cached.promise) {
         cached.promise = mongoose
             .connect(
-                encodeURIComponent(
-                    "mongodb://" +
-                        `${mongoUsername}:${mongoPassword}@${mongoURI}/${mongoDatabase}`
-                ),
+                "mongodb://" +
+                    `${encodeURIComponent(mongoUsername)}:${encodeURIComponent(
+                        mongoPassword
+                    )}@${mongoURI}/${mongoDatabase}`,
                 { bufferCommands: false }
             )
             .then((mongoose) => mongoose);

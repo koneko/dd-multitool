@@ -75,7 +75,8 @@ exports.run = async (client, message, args) => {
                 let mentionBeReal = "";
                 if (estimatedPrice > 499 && !combined.includes("bereal")) {
                     stringprice = `**>__500__**`;
-                    mentionBeReal = " Use `bereal` for a more accurate answer.";
+                    mentionBeReal =
+                        " Use `bereal` for a more precise estimate.";
                 } else if (estimatedPrice == 0) {
                     stringprice = "**0** (<:TavKeep:1179145911180480563>)";
                 } else {

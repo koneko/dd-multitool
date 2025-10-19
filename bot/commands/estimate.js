@@ -70,24 +70,19 @@ exports.run = async (client, message, args) => {
                     `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``
                 );
             } else {
-                const {
-                    gameValue,
-                    estimatedPrice,
-                    returnKeyWord,
-                    closestInTable,
-                } = data;
+                const { gameValue, estimatedPrice, returnKeyWord } = data;
                 let stringprice;
+                let mentionBeReal = "";
                 if (estimatedPrice > 499 && !combined.includes("bereal")) {
-                    stringprice = `a fair amount of (honestly no idea, sheet just says auction/rare, include \`bereal\` to be less ambigous)`;
-                    closestInTable.val = "auction";
-                    closestInTable.diff = "it";
+                    stringprice = `**>__500__**`;
+                    mentionBeReal = " Use `bereal` for a more accurate answer.";
                 } else if (estimatedPrice == 0) {
                     stringprice = "**0** (<:TavKeep:1179145911180480563>)";
                 } else {
                     stringprice = `**${estimatedPrice}**`;
                 }
                 return message.channel.send(
-                    `Hmm... I estimate your **${gameValue} ${returnKeyWord}** to be worth approximately ${stringprice} cv.\n*Estimation is provided through looking at past trades/price checks/sheets in DDRNG. Take this estimation with a grain of salt.*\n*Closest price in table: **${closestInTable.val}** cv, diff: **${closestInTable.diff}***.`
+                    `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}`
                 );
             }
         }

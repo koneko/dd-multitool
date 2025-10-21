@@ -115,18 +115,19 @@ client.once(Events.ClientReady, async (readyClient) => {
 client.on(Events.MessageCreate, async (message) => {
     if (message.author.bot) return;
 
-    client.usersToReactTo.forEach(async (item) => {
-        if (
-            message.mentions.users.find((u) => u.id == item.userId) &&
-            !message.reference
-        ) {
-            try {
-                await message.react(item.emoji);
-            } catch (err) {
-                console.error("Failed to react to message:", err);
+    if (message.guildId != DDRNG_GUILD_ID)
+        client.usersToReactTo.forEach(async (item) => {
+            if (
+                message.mentions.users.find((u) => u.id == item.userId) &&
+                !message.reference
+            ) {
+                try {
+                    await message.react(item.emoji);
+                } catch (err) {
+                    console.error("Failed to react to message:", err);
+                }
             }
-        }
-    });
+        });
     if (message.content == "<<sesarisdrunkagain") {
         function random(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
@@ -136,6 +137,7 @@ client.on(Events.MessageCreate, async (message) => {
         if (rand != 1 && message.author.id != client.ownerID) return;
         message.reply(quote.replace("{author}", `<@${message.author.id}>`));
     }
+    // if we are in wheelchairs server, allow use of the `cprefix`.
     if (
         message.content.indexOf(prefix) !== 0 &&
         message.guildId != WHEELCHAIRS_GUILD_ID
@@ -178,10 +180,7 @@ client.on(Events.MessageCreate, async (message) => {
     try {
         for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
             let uid = BLACKLISTED_USERS_IDS[i];
-            if (message.author.id == uid)
-                return message.channel.send(
-                    "`You are prohibited from using this bot.!`"
-                );
+            if (message.author.id == uid) return;
         }
         let cmdResult = await cmd.run(client, message, args);
         if (!cmdResult)

@@ -3,13 +3,13 @@ const knowledge = [
         topic: "cv",
         title: "CV Explanation",
         content:
-            "[Theoran's video if you don't want to read](https://www.youtube.com/watch?v=BqNyES4hCTw)",
+            '[Theoran\'s video if you don\'t want to read](https://www.youtube.com/watch?v=BqNyES4hCTw)\n\nIt\'s supposed to be "companion cube value," but people use the shorter CV in terms of overall currency.\n(Companion cubes no longer hold any value in the game, due hackers duplicating them.)\nThe main currency is Diamonds / Crystal Hearts and/or for smaller things Coal / Heart Fragments.\n[Event Items](https://docs.google.com/spreadsheets/d/1XzYuWB4I9RoNe8x-DD2M1koWs72tW8sTgyQ_n-d7l-E/edit?gid=145819532#gid=145819532) Can also be used as currency.\nDiamonds / Crystal Hearts are generally valued at:\n- 5cv for a non-tower damage capping one\n- 10cv for a tower damage capping one\n- 15cv for one that caps tower damage + one other tower stat.\n- If a diamond caps tower damage + 2 other tower stats, it is worth >50cv atleast.\n*(diamonds that cap other stats without capping tower damage are worth 5cv, unless they triple cap.)*\nWhen a player states an item is worth x amount of CV they just mean any amount 5/10/15 CV Diamonds / Crystal Hearts or Event Items (if they are accepting them as currency) as long as it adds up to that amount of "cv."',
     },
     {
         topic: "stacking",
         title: "How to stack",
         content:
-            "[Watch this video](https://www.youtube.com/watch?v=8zjqUsIMXrg)",
+            "[Watch this video](https://www.youtube.com/watch?v=8zjqUsIMXrg)\n[Link to the script if you just want to copy-paste](https://drive.overflow.fun/public/script.txt)",
     },
     {
         topic: "lm waves",

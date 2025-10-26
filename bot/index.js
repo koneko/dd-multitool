@@ -103,7 +103,7 @@ client.once(Events.ClientReady, async (readyClient) => {
     client.user.setPresence({
         activities: [
             {
-                name: `pay me a fair salary! prefix is ${client.prefix}.`,
+                name: `My prefix is ${client.prefix} and you can type help if you need any.`,
                 type: ActivityType.Custom,
             },
         ],

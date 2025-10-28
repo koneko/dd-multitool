@@ -14,6 +14,10 @@ exports.hidden = false;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
+    if (!client.sharedEndpoint)
+        return message.channel.send(
+            "client.sharedEndpoint is not set, please ping shiro."
+        );
     if (!args[0]) {
         return fetch(client.sharedEndpoint + "estimate" + "?getPriceTable=true")
             .then((d) => d.json())

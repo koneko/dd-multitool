@@ -5,7 +5,7 @@ exports.description =
     ":map: Displays previous, current (and soon next) map of the week.";
 exports.usage = "CLIENT_PREFIX:mapoftheweek";
 exports.example = "CLIENT_PREFIX:mapoftheweek\nCLIENT_PREFIX:motw";
-exports.aliases = [];
+exports.aliases = ["motw"];
 exports.hidden = false;
 function getNextTuesdayUTC() {
     const now = new Date();
@@ -43,10 +43,14 @@ function getNextTuesdayUTC() {
  * @param {string[]} args
  */
 exports.run = (client, message, args) => {
-    fetch(client.sharedEndpoint + "motw")
-        .then((d) => d.json())
-        .then((data) => {
-            try {
+    if (!client.sharedEndpoint)
+        return message.channel.send(
+            "client.sharedEndpoint is not set, please ping shiro."
+        );
+    try {
+        fetch(client.sharedEndpoint + "motw")
+            .then((d) => d.json())
+            .then((data) => {
                 let nextMap = ":question: :question: :question:";
                 if (args[0] == "force" && message.author.id == client.ownerID)
                     nextMap = `__**${data.next.friendlyName}**__`;
@@ -76,10 +80,11 @@ exports.run = (client, message, args) => {
                     }
                 );
                 return message.channel.send({ embeds: [embed] });
-            } catch (e) {
-                return message.channel.send(
-                    "Something went wrong. MOTW returned: " + e
-                );
-            }
-        });
+            })
+            .catch((e) => {
+                message.channel.send("MOTW API returned error: " + e);
+            });
+    } catch (e) {
+        message.channel.send("MOTW returned error: " + e);
+    }
 };

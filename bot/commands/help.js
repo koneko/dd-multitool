@@ -4,6 +4,7 @@ exports.description =
     ":scroll: Shows this message and provides insight into other commands.";
 exports.usage = "CLIENT_PREFIX:help [optional other command]";
 exports.example = "CLIENT_PREFIX:help res";
+exports.aliases = ["cmds"];
 exports.hidden = false;
 /**
  *
@@ -23,10 +24,7 @@ exports.run = (client, message, args) => {
                     client.prefix
                 )
             );
-        if (
-            (cmd.hidden && message.author.id != client.ownerID)
-        )
-            return;
+        if (cmd.hidden && message.author.id != client.ownerID) return;
         embed.setTitle(`Help for \`${cmd.name}\` command`);
         embed.setDescription(cmd.description);
         embed.addFields(
@@ -43,10 +41,7 @@ exports.run = (client, message, args) => {
         [...client.commands.values()]
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .forEach((cmd) => {
-                if (
-                    cmd.hidden && message.author.id != client.ownerID
-                )
-                    return;
+                if (cmd.hidden && message.author.id != client.ownerID) return;
                 embed.addFields({
                     name: cmd.name,
                     value: cmd.description.replaceAll(

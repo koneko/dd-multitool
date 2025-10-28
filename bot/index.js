@@ -177,12 +177,11 @@ client.on(Events.MessageCreate, async (message) => {
     let cmd = client.commands.get(command);
 
     if (!cmd) {
-        cmds = client.commands.filter(cmd => cmd.aliases.find(alias => alias == command))
-        if (cmds.length > 0) {
-            cmd = cmds;
-            console.log("Found command alias.")
-        } else {
-            return 
+        cmd = client.commands.find((cmd) =>
+            cmd.aliases.find((alias) => alias == command)
+        );
+        if (!cmd) {
+            return;
         }
     }
 

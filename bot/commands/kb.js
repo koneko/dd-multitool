@@ -6,6 +6,12 @@ exports.usage = "CLIENT_PREFIX:kb <topic>";
 exports.example =
     "CLIENT_PREFIX:kb list (lists available topics)\nCLIENT_PREFIX:kb stacking\nCLIENT_PREFIX:kb cv";
 exports.hidden = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = async (client, message, args) => {
     const topic = args.join(" ");
     if (!topic) {

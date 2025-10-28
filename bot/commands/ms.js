@@ -6,6 +6,12 @@ exports.usage = "CLIENT_PREFIX:ms <elemental damage> <ups> [projectile speed]";
 exports.example = "CLIENT_PREFIX:ms 10000 250 10000";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     if (!args[0] || !args[1])
         return message.channel.send(

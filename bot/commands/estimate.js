@@ -7,6 +7,12 @@ exports.example =
     "CLIENT_PREFIX:estimate 1600 ab2\nCLIENT_PREFIX:estimate 1100 thp\nCLIENT_PREFIX:estimate 2400 app builder staff\nCLIENT_PREFIX:estimate 2200 app builder piece\nCLIENT_PREFIX:estimate 2200 app armor\n(running the command without a query shows all available items)\n(you can also include `showtable` anywhere to show raw price data)\n(you can also include `bereal` for prices that are above 500cv for the result to be less ambigous)\n(always put number first, do not put conflicting data to avoid confusion)";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = async (client, message, args) => {
     if (!args[0]) {
         return fetch(client.sharedEndpoint + "estimate" + "?getPriceTable=true")

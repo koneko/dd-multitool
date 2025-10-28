@@ -4,6 +4,12 @@ exports.usage = "CLIENT_PREFIX:refetch";
 exports.example = "CLIENT_PREFIX:refetch";
 exports.hidden = true;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = async (client, message, args) => {
     if (message.author.id != client.ownerID)
         return message.channel.send("not for you :3");

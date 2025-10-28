@@ -36,6 +36,12 @@ function getNextTuesdayUTC() {
     // Return Unix timestamp (seconds since epoch)
     return Math.floor(nextTuesday.getTime() / 1000);
 }
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     fetch(client.sharedEndpoint + "motw")
         .then((d) => d.json())
@@ -50,7 +56,7 @@ exports.run = (client, message, args) => {
                     {
                         name: "What is Map of the Week?",
                         value:
-                            "Every week, one map will be picked as Map of the Week. It's name will be colored blue (it takes 30-60 seconds to show when you enter your tavern) and all drops (except for chest drops) will be **doubled**.\nMap of the Week changes " +
+                            "Every week, one map will be picked as Map of the Week. It's name will be colored blue and all drops (except for chest drops) on campaign/survival/pure strategy will be **doubled**.\nMap of the Week changes " +
                             `**<t:${getNextTuesdayUTC()}:R>**.`,
                     },
                     {

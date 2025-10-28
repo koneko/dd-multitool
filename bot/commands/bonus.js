@@ -6,6 +6,12 @@ exports.usage =
 exports.example = "CLIENT_PREFIX:bonus 100 100";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     let is1nan = false;
     if (!args[0])

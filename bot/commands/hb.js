@@ -31,6 +31,12 @@ exports.usage = "CLIENT_PREFIX:hb <points>";
 exports.example = "CLIENT_PREFIX:hb 5000";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     if (!args[0])
         return message.channel.send(

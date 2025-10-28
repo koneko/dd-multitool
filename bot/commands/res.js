@@ -7,6 +7,12 @@ exports.usage =
 exports.example = "CLIENT_PREFIX:res -3 1 -16 14 | 406 440";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = async (client, message, args) => {
     for (let i = 0; i < args.length; i++) {
         if (args[i] == "|") continue;

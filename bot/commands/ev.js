@@ -75,6 +75,12 @@ exports.usage =
 exports.example = "CLIENT_PREFIX:ev 6000 5000\nCLIENT_PREFIX:ev 10000";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     if (!args[0])
         return message.channel.send(

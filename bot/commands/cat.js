@@ -4,6 +4,12 @@ exports.usage = "CLIENT_PREFIX:cat <boost> <levels>";
 exports.example = "CLIENT_PREFIX:cat 80 120";
 exports.hidden = false;
 exports.isAlias = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     if (!args[0] || !args[1])
         return message.channel.send(

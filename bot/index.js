@@ -177,6 +177,7 @@ client.on(Events.MessageCreate, async (message) => {
     const cmd = client.commands.get(command);
 
     if (!cmd) return;
+
     try {
         for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
             let uid = BLACKLISTED_USERS_IDS[i];

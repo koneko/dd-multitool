@@ -5,6 +5,12 @@ exports.description =
 exports.usage = "CLIENT_PREFIX:help [optional other command]";
 exports.example = "CLIENT_PREFIX:help res";
 exports.hidden = false;
+/**
+ *
+ * @param {Client} client
+ * @param {Message} message
+ * @param {string[]} args
+ */
 exports.run = (client, message, args) => {
     let embed = new EmbedBuilder();
     embed.setTitle("Commands Helper");

@@ -16,7 +16,12 @@ exports.run = (client, message, args) => {
     let embed = new EmbedBuilder();
     embed.setTitle("Commands Helper");
     if (args[0]) {
-        const cmd = client.commands.get(args[0]);
+        let cmd = client.commands.get(args[0]);
+        if (!cmd) {
+            cmd = client.commands.find((cmd) =>
+                cmd.aliases.find((alias) => alias == args[0])
+            );
+        }
         if (!cmd)
             return message.channel.send(
                 "Command not found, try `CLIENT_PREFIX:help` first.".replaceAll(

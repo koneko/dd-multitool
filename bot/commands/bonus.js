@@ -4,8 +4,8 @@ exports.description =
 exports.usage =
     "CLIENT_PREFIX:bonus <number> <number> [inf optional extra numbers]";
 exports.example = "CLIENT_PREFIX:bonus 100 100";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

@@ -5,8 +5,8 @@ exports.description =
     ":map: Displays previous, current (and soon next) map of the week.";
 exports.usage = "CLIENT_PREFIX:mapoftheweek";
 exports.example = "CLIENT_PREFIX:mapoftheweek\nCLIENT_PREFIX:motw";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 function getNextTuesdayUTC() {
     const now = new Date();
 

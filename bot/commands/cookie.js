@@ -5,9 +5,8 @@ exports.description =
     ":cookie: Give someone a cookie to show your appreciation.";
 exports.usage = "CLIENT_PREFIX:cookie <@mention>";
 exports.example = "CLIENT_PREFIX:cookie @Tigi\n*(also supports replying)*";
-exports.aliases = ["givecookie"]; // TODO: implement
+exports.aliases = ["givecookie"];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

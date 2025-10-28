@@ -14,7 +14,6 @@
         "astro": "^5.14.1",
         "auth-astro": "^4.2.0",
         "cheerio": "^1.1.2",
-        "mongodb": "^6.20.0",
         "mongoose": "^8.19.1",
         "pixi.js": "^8.13.1"
     }

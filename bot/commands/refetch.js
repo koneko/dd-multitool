@@ -2,8 +2,8 @@ exports.name = "refetch";
 exports.description = ":ninja: Refetch user react data.";
 exports.usage = "CLIENT_PREFIX:refetch";
 exports.example = "CLIENT_PREFIX:refetch";
+exports.aliases = [];
 exports.hidden = true;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

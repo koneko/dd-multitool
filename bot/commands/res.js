@@ -5,8 +5,8 @@ exports.description =
 exports.usage =
     "CLIENT_PREFIX:res <res> <res> <res> [res] | <hero stat> <levels> [second hero stat]";
 exports.example = "CLIENT_PREFIX:res -3 1 -16 14 | 406 440";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

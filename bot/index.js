@@ -174,9 +174,17 @@ client.on(Events.MessageCreate, async (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    const cmd = client.commands.get(command);
+    let cmd = client.commands.get(command);
 
-    if (!cmd) return;
+    if (!cmd) {
+        cmds = client.commands.filter(cmd => cmd.aliases.find(alias => alias == command))
+        if (cmds.length > 0) {
+            cmd = cmds;
+            console.log("Found command alias.")
+        } else {
+            return 
+        }
+    }
 
     try {
         for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {

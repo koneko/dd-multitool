@@ -6,6 +6,7 @@ exports.usage = "CLIENT_PREFIX:kb <topic>";
 exports.example =
     "CLIENT_PREFIX:kb list (lists available topics)\nCLIENT_PREFIX:kb stacking\nCLIENT_PREFIX:kb cv";
 exports.hidden = false;
+exports.aliases = [];
 /**
  *
  * @param {Client} client

@@ -73,8 +73,8 @@ exports.description =
 exports.usage =
     "CLIENT_PREFIX:ev <hdmg> <ab2> OR CLIENT_PREFIX:ev <total stats>";
 exports.example = "CLIENT_PREFIX:ev 6000 5000\nCLIENT_PREFIX:ev 10000";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

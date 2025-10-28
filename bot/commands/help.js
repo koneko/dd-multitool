@@ -24,8 +24,7 @@ exports.run = (client, message, args) => {
                 )
             );
         if (
-            (cmd.hidden && message.author.id != client.ownerID) ||
-            cmd.description == "alias"
+            (cmd.hidden && message.author.id != client.ownerID)
         )
             return;
         embed.setTitle(`Help for \`${cmd.name}\` command`);
@@ -45,8 +44,7 @@ exports.run = (client, message, args) => {
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .forEach((cmd) => {
                 if (
-                    (cmd.hidden && message.author.id != client.ownerID) ||
-                    cmd.isAlias
+                    cmd.hidden && message.author.id != client.ownerID
                 )
                     return;
                 embed.addFields({

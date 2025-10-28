@@ -30,8 +30,8 @@ exports.name = "tb";
 exports.description = ":fire: Calculate tower boost's damage multiplier.";
 exports.usage = "CLIENT_PREFIX:tb <points>";
 exports.example = "CLIENT_PREFIX:tb 5000";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

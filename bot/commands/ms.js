@@ -4,8 +4,8 @@ exports.description =
     ":tada: Calculate moon staff damage taking in to account projectile speed.";
 exports.usage = "CLIENT_PREFIX:ms <elemental damage> <ups> [projectile speed]";
 exports.example = "CLIENT_PREFIX:ms 10000 250 10000";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

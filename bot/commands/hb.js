@@ -29,8 +29,8 @@ exports.name = "hb";
 exports.description = ":muscle: Calculate hero boost's damage multiplier.";
 exports.usage = "CLIENT_PREFIX:hb <points>";
 exports.example = "CLIENT_PREFIX:hb 5000";
+exports.aliases = [];
 exports.hidden = false;
-exports.isAlias = false;
 /**
  *
  * @param {Client} client

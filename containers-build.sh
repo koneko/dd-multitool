@@ -9,6 +9,9 @@ echo "Latest commit message: $COMMIT_MSG"
 if echo "$COMMIT_MSG" | grep -iq "rebuild"; then
   echo "Commit contains 'rebuild': rebuilding all containers"
   CHANGED_DIRS=("bot" "api" "web" "analytics")
+elif echo "$COMMIT_MSG" | grep -iq "nobuild"; then
+    echo "Commit contains 'nobuild': skipping building any containers."
+    CHANGED_DIRS=()
 else
   # Detect changed directories safely
   if git rev-parse HEAD~1 >/dev/null 2>&1; then

@@ -13,8 +13,8 @@ exports.name = "ping";
 exports.description = ":ping_pong: View service statistics.";
 exports.usage = "CLIENT_PREFIX:ping";
 exports.example = "CLIENT_PREFIX:ping";
+exports.aliases = [];
 exports.hidden = true;
-exports.isAlias = false;
 exports.run = async (client, message, args) => {
     return message.channel.send("Fetching data...").then((m) => {
         m.edit(

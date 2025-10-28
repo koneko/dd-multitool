@@ -4,7 +4,7 @@ exports.description =
     ":crossed_swords: Calculate calamity blade damage taking in to account projectile speed.";
 exports.usage = "CLIENT_PREFIX:cb <damage> <ups> [projectile speed]";
 exports.example = "CLIENT_PREFIX:cb 10000 250 10000";
-exports.aliases = [];
+exports.aliases = ["cblade"];
 exports.hidden = false;
 /**
  *

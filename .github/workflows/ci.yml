@@ -70,11 +70,6 @@ jobs:
             ANALYTICS_TOKEN: ${{ secrets.ANALYTICS_TOKEN }}
             ANALYTICS_PREFIX: ${{ secrets.ANALYTICS_PREFIX }}
             ANALYTICS_LOG_CHANNEL_ID: ${{ secrets.ANALYTICS_LOG_CHANNEL_ID }}
-            MONGODB_ROOT_USERNAME: ${{ secrets.MONGODB_ROOT_USERNAME }}
-            MONGODB_ROOT_PASSWORD: ${{ secrets.MONGODB_ROOT_PASSWORD }}
-            AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-            DDMT_WEB_CLIENT_ID: ${{ secrets.DDMT_WEB_CLIENT_ID }}
-            DDMT_WEB_CLIENT_SECRET: ${{ secrets.DDMT_WEB_CLIENT_SECRET }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3

@@ -100,7 +100,7 @@ exports.run = async (client, message, args) => {
                 return message.channel.send(
                     `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}${
                         isLastInTable
-                            ? "\n-#Notice: This is the last price in the price table. It might not be accurate if your item greatly exceeds it!"
+                            ? "\n-# Notice: This is the last price in the price table. It might not be accurate if your item greatly exceeds it!"
                             : ""
                     }`
                 );

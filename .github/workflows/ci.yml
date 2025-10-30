@@ -85,7 +85,7 @@ jobs:
                   if [ -f changed_services.txt ]; then
                     for service in $(cat changed_services.txt); do
                       echo "Restarting $service..."
-                      docker compose up -d --force-recreate $service
+                      docker compose up -d --force-recreate --remove-orphans $service
                     done
                   else
                     echo "No containers need restarting."

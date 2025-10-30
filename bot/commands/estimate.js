@@ -80,7 +80,12 @@ exports.run = async (client, message, args) => {
                     `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``
                 );
             } else {
-                const { gameValue, estimatedPrice, returnKeyWord } = data;
+                const {
+                    gameValue,
+                    estimatedPrice,
+                    returnKeyWord,
+                    isLastInTable,
+                } = data;
                 let stringprice;
                 let mentionBeReal = "";
                 if (estimatedPrice > 499 && !combined.includes("bereal")) {
@@ -93,7 +98,11 @@ exports.run = async (client, message, args) => {
                     stringprice = `**${estimatedPrice}**`;
                 }
                 return message.channel.send(
-                    `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}`
+                    `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}${
+                        isLastInTable
+                            ? "\n-#Notice: This is the last price in the price table. It might not be accurate if your item greatly exceeds it!"
+                            : ""
+                    }`
                 );
             }
         }

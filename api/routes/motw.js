@@ -56,7 +56,7 @@ const maps = [
 
 function getOrdinalDateStringUTC(date = new Date()) {
     const year = date.getUTCFullYear();
-    const startOfYear = Date.UTC(year, 0, 0); // midnight Jan 0 UTC
+    const startOfYear = Date.UTC(year, 0, 0); // midnight Jan 0 UTC+0
     const diff = date.getTime() - startOfYear;
     const dayOfYear = Math.floor(diff / 86400000);
     return dayOfYear;

@@ -305,6 +305,7 @@ export const get = async (req, res) => {
     let subtable, closestInTable;
     let gameValue = -1;
     let returnKeyWord = "";
+    let isLastInTable = false;
 
     combined.split(" ").forEach((arg) => {
         if (gameValue == -1 && validateNum(arg)) {
@@ -337,6 +338,9 @@ export const get = async (req, res) => {
             if (estimatedPrice > 100000) {
                 estimatedPrice = 100000;
             }
+            if (closestInTable.idx == subtable.length - 1) {
+                isLastInTable = true;
+            }
         }
     });
     if (entryFound) {
@@ -351,6 +355,7 @@ export const get = async (req, res) => {
                 estimatedPrice,
                 returnKeyWord,
                 closestInTable,
+                isLastInTable,
             });
         }
     } else return res.status(400).json({ error: "entry-not-found" });

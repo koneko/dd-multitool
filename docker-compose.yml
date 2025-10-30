@@ -7,32 +7,31 @@ services:
             - PORT=2000
         networks:
             - dundef-tool
-    web:
-        restart: unless-stopped
-        image: dd-multitool-web:latest
-        environment:
-            - SHARED_ENDPOINT=http://api:2000/
-            - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
-            - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
-            - AUTH_SECRET=${AUTH_SECRET}
-            - AUTH_TRUST_HOST=true
-            - AUTH_URL=https://ddmt.overflow.fun
-            - MONGO_USERNAME=${MONGODB_ROOT_USERNAME}
-            - MONGO_PASSWORD=${MONGODB_ROOT_PASSWORD}
-            - MONGO_URI=mongodb:27017
-            - MONGO_DATABASE=prod_database
-        networks:
-            - dundef-tool
-        depends_on:
-            - api
-            - mongodb
-        ports:
-            - "8080:4321"
-        healthcheck:
-            test: curl --fail http://localhost:4321/ || exit 1
-            interval: 30s
-            timeout: 5s
-            retries: 3
+    # web:
+    #     restart: unless-stopped
+    #     image: dd-multitool-web:latest
+    #     environment:
+    #         - SHARED_ENDPOINT=http://api:2000/
+    #         - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
+    #         - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
+    #         - AUTH_SECRET=${AUTH_SECRET}
+    #         - AUTH_TRUST_HOST=true
+    #         - AUTH_URL=https://ddmt.overflow.fun
+    #         - MONGO_USERNAME=${MONGODB_ROOT_USERNAME}
+    #         - MONGO_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    #         - MONGO_URI=mongodb:27017
+    #         - MONGO_DATABASE=prod_database
+    #     networks:
+    #         - dundef-tool
+    #     depends_on:
+    #         - api
+    #     ports:
+    #         - "8080:4321"
+    #     healthcheck:
+    #         test: curl --fail http://localhost:4321/ || exit 1
+    #         interval: 30s
+    #         timeout: 5s
+    #         retries: 3
     bot:
         restart: unless-stopped
         image: dd-multitool-bot:latest
@@ -58,24 +57,6 @@ services:
             - PORT=2000
         networks:
             - dundef-tool
-        depends_on:
-            - mongodb
-    mongodb:
-        image: mongo:8.0
-        restart: unless-stopped
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
-            - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
-            - MONGO_INITDB_DATABASE=prod_database
-        volumes:
-            - mongo_data:/data/db
-            - mongo_config:/data/configdb
-        networks:
-            - dundef-tool
 
 networks:
     dundef-tool:
-
-volumes:
-    mongo_data:
-    mongo_config:

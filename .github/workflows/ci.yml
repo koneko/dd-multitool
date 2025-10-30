@@ -5,10 +5,9 @@ on:
         branches:
             - main
 
-# ddmt-prod is label for ubuntu-latest
 jobs:
     check-commit-message:
-        runs-on: ddmt-prod
+        runs-on: self-hosted
         outputs:
             skip: ${{ steps.skip_check.outputs.skip }}
         steps:
@@ -31,7 +30,7 @@ jobs:
     test-api:
         needs: check-commit-message
         if: needs.check-commit-message.outputs.skip != 'true'
-        runs-on: ddmt-prod
+        runs-on: self-hosted
         steps:
             - uses: actions/checkout@v3
             - name: Setup Node.js
@@ -48,7 +47,7 @@ jobs:
     test-bot:
         needs: check-commit-message
         if: needs.check-commit-message.outputs.skip != 'true'
-        runs-on: ddmt-prod
+        runs-on: self-hosted
         steps:
             - uses: actions/checkout@v3
             - name: Setup Node.js
@@ -63,7 +62,7 @@ jobs:
               run: npm test
 
     build-and-deploy:
-        runs-on: ddmt-prod
+        runs-on: self-hosted
         needs: [test-api, test-bot]
         env:
             TOKEN: ${{ secrets.TOKEN }}
@@ -84,15 +83,6 @@ jobs:
 
             - name: Build containers
               run: bash ./containers-build.sh
-
-            - name: Ensure MongoDB is running
-              run: |
-                  if [ "$(docker ps -q -f name=mongodb)" ]; then
-                    echo "MongoDB is already running."
-                  else
-                    echo "MongoDB is not running. Starting it..."
-                    docker compose up -d mongodb
-                  fi
 
             - name: Restart changed containers
               if: success()

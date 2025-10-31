@@ -1,10 +1,10 @@
 const { Message, Client } = require("discord.js");
-exports.name = "blacklist";
+exports.name = "d";
 exports.description =
     ":thinking: Repeat last command found in channel. Useful for testing.";
 exports.usage = "CLIENT_PREFIX:d";
 exports.example = "CLIENT_PREFIX:d";
-exports.aliases = [];
+exports.aliases = ["double"];
 exports.hidden = true;
 /**
  *
@@ -21,6 +21,7 @@ exports.run = async (client, message, args) => {
         (msg) =>
             !msg.author.bot &&
             !msg.content.startsWith(client.prefix + "d") &&
+            !msg.content.startsWith(client.prefix + "double") &&
             msg.content.startsWith(client.prefix)
     );
     const foundArgs = foundMessage.content
@@ -37,7 +38,7 @@ exports.run = async (client, message, args) => {
         );
         if (!cmd) {
             return message.channel.send(
-                "Could not find valid command in latest 10 messages."
+                "Could not find valid command to double in latest 10 messages."
             );
         }
     }
@@ -46,7 +47,7 @@ exports.run = async (client, message, args) => {
         await cmd.run(client, foundMessage, foundArgs);
     } catch (e) {
         return message.channel.send(
-            "Duplicated command returned error when being run: " + e
+            "Doubled command returned error when being run: " + e
         );
     }
 };

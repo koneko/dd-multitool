@@ -1,10 +1,9 @@
 const { Message, Client } = require("discord.js");
 exports.name = "evaluate";
-exports.description =
-    ":computer: Evaluate JavaScript on production docker image.";
+exports.description = ":computer: Evaluate JavaScript code on prod.";
 exports.usage = "CLIENT_PREFIX:eval [some JS code]";
-exports.example = "CLIENT_PREFIX:eval message.channel.send('hello!');";
-exports.aliases = [];
+exports.example = "CLIENT_PREFIX:eval process.uptime()";
+exports.aliases = ["evaluate"];
 exports.hidden = true;
 
 /**

@@ -5,7 +5,7 @@ services:
         image: dd-multitool-api:latest
         environment:
             - PORT=2000
-            - DATABASE_PATH=/opt/dd-api.db
+            - DATABASE_PATH=/opt/
         volumes:
             - /opt/api/database:/opt
         networks:
@@ -54,9 +54,6 @@ services:
             - ANALYTICS_TOKEN=${ANALYTICS_TOKEN}
             - ANALYTICS_PREFIX=${ANALYTICS_PREFIX}
             - ANALYTICS_LOG_CHANNEL_ID=${ANALYTICS_LOG_CHANNEL_ID}
-            - MONGO_USERNAME=${MONGODB_ROOT_USERNAME}
-            - MONGO_PASSWORD=${MONGODB_ROOT_PASSWORD}
-            - MONGO_DATABASE=prod_database
             - PORT=2000
         networks:
             - dundef-tool

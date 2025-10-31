@@ -16,7 +16,8 @@ try {
         "config.json not found or invalid. Falling back to environment variables."
     );
 }
-const url = "https://drive.overflow.fun/public/react.json";
+const REACTION_URL = "https://drive.overflow.fun/public/react.json";
+const BLACKLIST_URL = "https://drive.overflow.fun/public/blacklist.json";
 const token = process.env.TOKEN || cfg.TOKEN;
 const prefix = process.env.PREFIX || cfg.PREFIX;
 const client = new Client({
@@ -31,7 +32,6 @@ const DDRNG_ALLOWED_CHANNELS = [
     496061346446835732, 499656239572058132, 771329671953776661,
     556864412338749440,
 ];
-const BLACKLISTED_USERS_IDS = [1054183205726588988]; // so far only Joann rule
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
 const QUOTES = [
     "tboob is too rare, i hope this is good enough for you",
@@ -70,6 +70,7 @@ client.prefix = prefix;
 client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;
 client.usersToReactTo = [];
+client.blacklistedUserIDs = [];
 
 if (!client.sharedEndpoint && process.argv[2] != "--no-shared")
     return log.error(
@@ -89,7 +90,7 @@ fs.readdir("./commands/", (err, files) => {
 
 client.once(Events.ClientReady, async (readyClient) => {
     try {
-        const res = await fetch(url);
+        const res = await fetch(REACTION_URL);
         const data = await res.json();
 
         client.usersToReactTo = data.map((entry) => {
@@ -97,7 +98,18 @@ client.once(Events.ClientReady, async (readyClient) => {
             return { userId, emoji };
         });
     } catch (e) {
-        console.warn("copyparty is offline, wont work.");
+        console.warn("Unable to fetch reactions. copyparty might be down.");
+    }
+
+    try {
+        const res = await fetch(BLACKLIST_URL);
+        const data = await res.json();
+
+        client.blacklistedUserIDs = data;
+    } catch (e) {
+        console.warn(
+            "Unable to fetch blacklisted users. copyparty might be down."
+        );
     }
 
     client.user.setPresence({
@@ -186,8 +198,8 @@ client.on(Events.MessageCreate, async (message) => {
     }
 
     try {
-        for (let i = 0; i < BLACKLISTED_USERS_IDS.length; i++) {
-            let uid = BLACKLISTED_USERS_IDS[i];
+        for (let i = 0; i < client.blacklistedUserIDs.length; i++) {
+            let uid = client.blacklistedUserIDs[i];
             if (message.author.id == uid) return;
         }
         let cmdResult = await cmd.run(client, message, args);

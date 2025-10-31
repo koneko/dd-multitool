@@ -14,7 +14,7 @@ exports.hidden = true;
  */
 exports.run = async (client, message, args) => {
     if (message.author.id != client.ownerID)
-        return message.channel.send("only for shiro, soz");
+        return message.channel.send("only for shiro, unlucky.");
 
     const res = await message.channel.messages.fetch({ limit: 10 });
     const foundMessage = res.find(

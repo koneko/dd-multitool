@@ -5,6 +5,9 @@ services:
         image: dd-multitool-api:latest
         environment:
             - PORT=2000
+            - DATABASE_PATH=/opt/dd-api.db
+        volumes:
+            - /opt/api/database:/opt
         networks:
             - dundef-tool
     # web:

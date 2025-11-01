@@ -42,6 +42,11 @@ exports.run = (client, message, args) => {
                 value: cmd.example.replaceAll("CLIENT_PREFIX:", client.prefix),
             }
         );
+        if (cmd.aliases.length > 0) {
+            embed.setFooter({
+                text: "Aliases: " + cmd.aliases.join(", "),
+            });
+        }
     } else {
         [...client.commands.values()]
             .sort((a, b) => (a.name > b.name ? 1 : -1))

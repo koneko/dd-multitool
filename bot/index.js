@@ -198,9 +198,11 @@ client.on(Events.MessageCreate, async (message) => {
     }
 
     try {
-        for (let i = 0; i < client.blacklistedUserIDs.length; i++) {
-            let uid = client.blacklistedUserIDs[i];
-            if (message.author.id == uid) return;
+        if (message.author.id != client.ownerID) {
+            for (let i = 0; i < client.blacklistedUserIDs.length; i++) {
+                let uid = client.blacklistedUserIDs[i];
+                if (message.author.id == uid) return;
+            }
         }
         let cmdResult = await cmd.run(client, message, args);
         if (!cmdResult)

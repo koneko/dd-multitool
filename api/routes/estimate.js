@@ -50,7 +50,7 @@ const priceTable = [
         ],
     },
     {
-        regex: /\b(?:app builder staff|apprentice builder staff|app staff|apprentice staff)\b/i,
+        regex: /\b(?:app builder staff|apprentice builder staff|app staff|apprentice staff|apprentice builder weapon|app builder weapon)\b/i,
         returnKeyWord: "apprentice builder staff",
         prices: [
             "2200;5",

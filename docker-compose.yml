@@ -10,31 +10,22 @@ services:
             - /opt/api/database:/opt
         networks:
             - dundef-tool
-    # web:
-    #     restart: unless-stopped
-    #     image: dd-multitool-web:latest
-    #     environment:
-    #         - SHARED_ENDPOINT=http://api:2000/
-    #         - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
-    #         - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
-    #         - AUTH_SECRET=${AUTH_SECRET}
-    #         - AUTH_TRUST_HOST=true
-    #         - AUTH_URL=https://ddmt.overflow.fun
-    #         - MONGO_USERNAME=${MONGODB_ROOT_USERNAME}
-    #         - MONGO_PASSWORD=${MONGODB_ROOT_PASSWORD}
-    #         - MONGO_URI=mongodb:27017
-    #         - MONGO_DATABASE=prod_database
-    #     networks:
-    #         - dundef-tool
-    #     depends_on:
-    #         - api
-    #     ports:
-    #         - "8080:4321"
-    #     healthcheck:
-    #         test: curl --fail http://localhost:4321/ || exit 1
-    #         interval: 30s
-    #         timeout: 5s
-    #         retries: 3
+    web:
+        restart: unless-stopped
+        image: dd-multitool-web:latest
+        environment:
+            - SHARED_ENDPOINT=http://api:2000/
+            - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
+            - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
+            - AUTH_SECRET=${AUTH_SECRET}
+            - AUTH_TRUST_HOST=true
+            - AUTH_URL=https://ddmt.overflow.fun
+        networks:
+            - dundef-tool
+        depends_on:
+            - api
+        ports:
+            - "8080:4321"
     bot:
         restart: unless-stopped
         image: dd-multitool-bot:latest

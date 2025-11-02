@@ -1,0 +1,329 @@
+<html>
+    <%- include('../shared/header')%>
+    <style>
+        .resistances > div.holder > div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+        }
+        .resistances > div.holder > div > input {
+            width: 50px;
+        }
+        .resistances > div.holder > div > span {
+            height: 32px;
+            font-size: 12px;
+        }
+        .resistances > div.holder {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .resistances {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .vertical {
+            height: 70px;
+            border-left: 2.5px solid lightgray;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+    <body>
+        <main class="container my-4" id="main-content">
+            <h1>Calculator</h1>
+            <hr />
+            <h2>Resistances</h2>
+            <span>
+                Resistance calculator tells you how many upgrades you'll spend
+                on resists! (ult items only) </span
+            ><br />
+            <span>
+                Calculator expects stats BEFORE the set bonus is applied, so
+                resistances only go to 29. </span
+            ><br />
+            <span
+                >Calculator works automatically as soon as you fill out the
+                requirements. (atleast the first 3 resistances and first 2
+                stats)</span
+            >
+            <br /><br />
+            <div class="resistances">
+                <div class="holder">
+                    <div>
+                        <img
+                            src="/images/resistances/Generic.png"
+                            alt="Generic"
+                            title="Generic"
+                        />
+                        <input type="number" id="generic" placeholder="0" />
+                    </div>
+                    <div>
+                        <img
+                            src="/images/resistances/Fire.png"
+                            alt="Fire"
+                            title="Fire"
+                        />
+                        <input type="number" id="fire" placeholder="0" />
+                    </div>
+                    <div>
+                        <img
+                            src="/images/resistances/Lightning.png"
+                            alt="Lightning"
+                            title="Lightning"
+                        />
+                        <input type="number" id="lightning" placeholder="0" />
+                    </div>
+                    <div>
+                        <img
+                            src="/images/resistances/Poison.png"
+                            alt="Poison"
+                            title="Poison (optional)"
+                        />
+                        <input type="number" id="poison" placeholder="0" />
+                    </div>
+                </div>
+                <div class="vertical"></div>
+                <div class="holder">
+                    <div>
+                        <img
+                            src="/images/resistances/HeroStat.png"
+                            alt="Hero Stat"
+                            title="Hero Stat"
+                        />
+                        <input type="number" id="hero-stat" placeholder="0" />
+                    </div>
+                    <div>
+                        <img
+                            src="/images/resistances/Upgrades.png"
+                            alt="Upgrades"
+                            title="Upgrades"
+                        />
+                        <input type="number" id="upgrades" placeholder="0" />
+                    </div>
+                    <div>
+                        <img
+                            src="/images/resistances/SecondaryStat.png"
+                            alt="Secondary Stat"
+                            title="Secondary Stat (optional)"
+                        />
+                        <input
+                            type="number"
+                            id="secondary-stat"
+                            placeholder="0"
+                        />
+                    </div>
+                    <div><button id="clear-btn">Clear</button></div>
+                </div>
+            </div>
+            <p id="resOutput"></p>
+            <hr />
+            <h2>Bonus</h2>
+
+            <span>Sums and calculates bonus for player stat numbers.</span
+            ><br />
+            <span
+                >Bonus will be summed and calculated the moment you start
+                typing.</span
+            >
+            <div class="bonus">
+                <input
+                    type="text"
+                    id="bonus-numbers"
+                    style="width: 300px"
+                    placeholder="123 456..."
+                />
+                <p id="bonusOutput"></p>
+            </div>
+        </main>
+    </body>
+    <%- include('../shared/footer') %>
+</html>
+
+<script>
+    const generic = document.getElementById("generic");
+    const fire = document.getElementById("fire");
+    const lightning = document.getElementById("lightning");
+    const poison = document.getElementById("poison");
+
+    const heroStatElement = document.getElementById("hero-stat");
+    const upgradesElement = document.getElementById("upgrades");
+    const secondaryStatElement = document.getElementById("secondary-stat");
+
+    const output = document.getElementById("resOutput");
+
+    generic.oninput = checkAndUpdateResistances;
+    fire.oninput = checkAndUpdateResistances;
+    lightning.oninput = checkAndUpdateResistances;
+    poison.oninput = checkAndUpdateResistances;
+    heroStatElement.oninput = checkAndUpdateStats;
+    upgradesElement.oninput = checkAndUpdateStats;
+    secondaryStatElement.oninput = checkAndUpdateStats;
+
+    document.getElementById("clear-btn").onclick = () => {
+        generic.value = "";
+        fire.value = "";
+        lightning.value = "";
+        poison.value = "";
+        heroStatElement.value = "";
+        upgradesElement.value = "";
+        secondaryStatElement.value = "";
+    };
+
+    function checkAndUpdateResistances() {
+        if (parseInt(generic.value) > 29) generic.value = "29";
+        if (parseInt(fire.value) > 29) fire.value = "29";
+        if (parseInt(lightning.value) > 29) lightning.value = "29";
+        if (parseInt(poison.value) > 29) poison.value = "29";
+        updateResult();
+    }
+
+    function checkAndUpdateStats() {
+        if (parseInt(heroStatElement.value) > 1200)
+            heroStatElement.value = "1200";
+        if (parseInt(upgradesElement.value) > 1200)
+            upgradesElement.value = "1200";
+        if (parseInt(secondaryStatElement.value) > 1200)
+            secondaryStatElement.value = "1200";
+        updateResult();
+    }
+
+    function updateResult() {
+        const resistances = [
+            parseInt(generic.value),
+            parseInt(fire.value),
+            parseInt(lightning.value),
+            parseInt(poison.value),
+        ];
+        let resUpgrades = 0;
+        let upgrades = parseInt(upgradesElement.value);
+        let mainStat = parseInt(heroStatElement.value);
+        let subStat = parseInt(secondaryStatElement.value);
+        if (isNaN(subStat)) subStat = 0;
+        console.log(upgrades, mainStat, subStat);
+        upgrades = upgrades - 1;
+        resistances.forEach((res) => {
+            if (res == null) return;
+            if (res > 29)
+                return (output.textContent =
+                    "Resistance can not be more than 29.");
+            if (res < 29) {
+                if (res < 0) {
+                    let underzero = Math.abs(res);
+                    if (underzero < 13) {
+                        resUpgrades += 23 + Math.abs(res);
+                    } else {
+                        if (underzero == 13 || underzero == 14) {
+                            resUpgrades += 23 + 13;
+                        }
+                        if (underzero == 15 || underzero == 16) {
+                            resUpgrades += 23 + 13 + 1;
+                        }
+                        if (underzero == 17 || underzero == 18) {
+                            resUpgrades += 23 + 13 + 2;
+                        }
+                        if (
+                            underzero == 19 ||
+                            underzero == 20 ||
+                            underzero == 22
+                        ) {
+                            resUpgrades += 23 + 13 + 3;
+                        }
+                        if (underzero == 21 || underzero == 23) {
+                            resUpgrades += 23 + 13 + 4;
+                        }
+                        if (underzero > 23) {
+                            resUpgrades += 29 - underzero;
+                        }
+                    }
+                } else {
+                    if (res < 14) {
+                        let am = 14 - res;
+                        resUpgrades += am + 4 + 6;
+                    } else {
+                        if (res == 14) {
+                            resUpgrades += 4 + 6;
+                        }
+                        if (res == 15 || res == 16) {
+                            resUpgrades += 3 + 6;
+                        }
+                        if (res == 17 || res == 18) {
+                            resUpgrades += 2 + 6;
+                        }
+                        if (res == 19 || res == 20 || res == 22) {
+                            resUpgrades += 1 + 6;
+                        }
+                        if (res == 21 || res == 23) {
+                            resUpgrades += 6;
+                        }
+                        if (res > 23) {
+                            resUpgrades += 29 - res;
+                        }
+                    }
+                }
+            }
+        });
+        upgrades -= resUpgrades;
+        mainStat += upgrades;
+        if (mainStat > 999) {
+            let over = mainStat - 999;
+            mainStat -= over;
+            subStat += over;
+        }
+        if (
+            isNaN(mainStat) ||
+            isNaN(upgrades) ||
+            isNaN(parseInt(generic.value)) ||
+            isNaN(parseInt(fire.value)) ||
+            isNaN(parseInt(lightning.value))
+        )
+            return;
+        output.innerHTML = `With <b>${resUpgrades}</b> upgrades spent in resistances, your piece will reach <b>${
+            mainStat + subStat
+        }</b>, or <b>${Math.ceil(
+            mainStat * 1.4 + subStat * 1.4
+        )}</b> with set bonus!`;
+    }
+</script>
+<script>
+    const input = document.getElementById("bonus-numbers");
+    const bonusOutput = document.getElementById("bonusOutput");
+    input.oninput = calculateBonus;
+
+    function calculateBonus() {
+        const numbersString = input.value.split(" ");
+        let is1nan = false;
+        if (!numbersString[0]) return (bonusOutput.textContent = "Need input.");
+        const numbers = [];
+        numbersString.forEach((arg) => {
+            if (arg.replace(" ", "").length == 0) return;
+            if (isNaN(parseInt(arg))) {
+                is1nan = true;
+            }
+            numbers.push(parseInt(arg));
+        });
+        if (is1nan)
+            return (bonusOutput.innerHTML =
+                "<b>One of the input numbers is not a number.</b>");
+        let sum = 0;
+        numbers.forEach((arg) => {
+            if (arg > 2000) arg = 2000; // just dont bother for anything higher than 2000
+            sum += parseInt(arg);
+        });
+        sum--;
+        bonusOutput.innerHTML = `Will reach <b>${sum}</b>, <b>${Math.ceil(
+            sum * 1.4
+        )}</b> with bonus.`;
+    }
+</script>

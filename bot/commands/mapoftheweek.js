@@ -12,9 +12,11 @@ function getNextTuesdayUTC() {
 
     // Get current day of week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const dayOfWeek = now.getUTCDay();
-
+    // this is done to automatically get the proper day that the ordinal week changes
+    const jan = new Date(`7.1.${now.getUTCFullYear()} 00:00:00 UTC+0`);
+    const firstWeek = jan.getUTCDay();
     // Calculate how many days until next Tuesday (2)
-    let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+    let daysUntilTuesday = (firstWeek - dayOfWeek + 7) % 7;
     if (daysUntilTuesday === 0) {
         // It's already Tuesday, so go to next week
         daysUntilTuesday = 7;

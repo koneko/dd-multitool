@@ -15,8 +15,8 @@ services:
         image: dd-multitool-web:latest
         environment:
             - SHARED_ENDPOINT=http://api:2000/
-            - DDMT_WEB_CLIENT_ID=${DDMT_WEB_CLIENT_ID}
-            - DDMT_WEB_CLIENT_SECRET=${DDMT_WEB_CLIENT_SECRET}
+            - AUTH_DISCORD_ID=${AUTH_DISCORD_ID}
+            - AUTH_DISCORD_SECRET=${AUTH_DISCORD_SECRET}
             - AUTH_SECRET=${AUTH_SECRET}
             - AUTH_TRUST_HOST=true
             - AUTH_URL=https://ddmt.overflow.fun

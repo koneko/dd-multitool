@@ -1,5 +1,6 @@
 {
     "name": "dd-multitool-web",
+    "type": "module",
     "version": "0.0.1",
     "scripts": {
         "dev": "astro dev",
@@ -8,6 +9,7 @@
         "astro": "astro"
     },
     "dependencies": {
+        "@auth/express": "^0.12.1",
         "cheerio": "^1.1.2",
         "ejs": "^3.1.10",
         "express": "^5.1.0",

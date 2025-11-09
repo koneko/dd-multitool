@@ -71,10 +71,14 @@ client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;
 client.usersToReactTo = [];
 client.blacklistedUserIDs = [];
-
 if (!client.sharedEndpoint && process.argv[2] != "--no-shared")
     return log.error(
         "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined. (Pass --no-shared as flag to disable, be careful though!)"
+    );
+
+if (!client.analyticsEndpoint)
+    log.warn(
+        "client.analyticsEndpoint (process.env.ANALYTICS_ENDPOINT) is undefined."
     );
 
 fs.readdir("./commands/", (err, files) => {

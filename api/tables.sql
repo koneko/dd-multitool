@@ -1,5 +1,0 @@
-CREATE TABLE Cookies (
-    ID         INTEGER  PRIMARY KEY AUTOINCREMENT,
-    GiverID    TEXT NOT NULL,
-    ReceiverID TEXT NOT NULL
-);

@@ -4,3 +4,4 @@ bot.tar
 api.tar
 web.tar
 fake/
+.env

@@ -41,6 +41,12 @@ const knowledge = [
         content:
             'Please turn on the in-game censor option before posting a picture of an item here. (shortcut CTRL+C or the "Censor items" option in game.)\nIt will replace the last digit of stats on special rare items with an x to hide that digit.\nThis stops people from making duplicates of the item and helps prevent hackers from learning too much about how these items roll to make their own legitimate looking ones.\nWe ask that you censor all Ultimate++ (and higher for Redux) items as well as Ultimate accessories, Ultimate seahorses, Transcendent propeller cats and Supreme unicorns.',
     },
+    {
+        topic: "canthostgame",
+        title: "Can't host games?",
+        content:
+            "If you CAN'T host your own matches but CAN join other people's, disable all network adapters but your primary internet connection in your Network and Sharing Centre section of the Control Panel. If this does not work, try disabling any potentially active tunneling engine on your computer, most often created by a VPN or Hamachi. There is an alternate method to fixing this issue pinned in <#556864412338749440> for more advanced users who would like a better permanent solution.",
+    },
 ];
 
 export const get = async (req, res) => {

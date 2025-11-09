@@ -1,8 +1,9 @@
+const { Blacklist } = require("../db");
 exports.name = "blacklist";
 exports.description = ":pregnant_man: See who's blacklisted.";
-exports.usage =
+exports.example =
     "CLIENT_PREFIX:blacklist @Tigi 31d\nCLIENT_PREFIX:blacklist @SirPanquakes 1s\nCLIENT_PREFIX:blacklist @Sesar :megachicken:s";
-exports.example = "CLIENT_PREFIX:blacklist [whatever arguments you want]";
+exports.usage = "CLIENT_PREFIX:blacklist [whatever arguments you want]";
 exports.aliases = [];
 exports.hidden = true;
 /**
@@ -27,22 +28,5 @@ exports.run = async (client, message, args) => {
         const quote = QUOTES[random(0, QUOTES.length - 1)];
         return message.channel.send(quote);
     }
-    try {
-        const url = "https://drive.overflow.fun/public/blacklist.json";
-        const res = await fetch(url);
-        const data = await res.json();
-
-        client.blacklistedUserIDs = data;
-
-        if (client.blacklistedUserIDs.length > 0)
-            return message.channel.send(
-                "The following user ids are blacklisted: " +
-                    client.blacklistedUserIDs.join(", ")
-            );
-        else return message.channel.send("no one is blacklisted :megachicken:");
-    } catch (e) {
-        return message.channel.send(
-            "copyparty instance unreachable/offline...."
-        );
-    }
+    console.log(await new Blacklist().get());
 };

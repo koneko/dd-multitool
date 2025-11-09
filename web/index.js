@@ -58,6 +58,10 @@ app.get("/tools/price", (req, res) => {
     res.render("tools/price", { user: res.locals.session?.user });
 });
 
+app.get("/planner/list", (req, res) => {
+    res.render("tools/price", { user: res.locals.session?.user });
+});
+
 app.use("/planner/*splat", authenticatedUser, (req, res, next) => {
     next();
 });

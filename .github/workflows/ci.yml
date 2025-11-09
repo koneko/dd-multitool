@@ -64,7 +64,6 @@ jobs:
     build-and-deploy:
         runs-on: self-hosted
         needs: [test-api, test-bot]
-        if: (needs.test-api.result == 'success' || needs.test-api.result == 'skipped') && (needs.test-bot.result == 'success' || needs.test-bot.result == 'skipped')
         env:
             TOKEN: ${{ secrets.TOKEN }}
             PREFIX: ${{ secrets.PREFIX }}

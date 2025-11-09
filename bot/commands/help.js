@@ -60,7 +60,7 @@ exports.run = (client, message, args) => {
                     ),
                 });
             });
-        embed.setFooter("Website URL: https://ddmt.overflow.fun");
+        embed.setFooter({ text: "Website URL: https://ddmt.overflow.fun" });
     }
     embed.setColor(0x00ff00);
     return message.channel.send({ embeds: [embed] });

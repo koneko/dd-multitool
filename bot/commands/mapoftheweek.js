@@ -53,8 +53,10 @@ exports.run = (client, message, args) => {
                     args[0] == "force" &&
                     (message.author.id == client.ownerID ||
                         message.author.id == OLIVER_SPECIAL_ID)
-                )
+                ) {
                     nextMap = `__**${data.next.friendlyName}**__`;
+                    nextMap = "but oliver said not to leak anymore...";
+                }
                 let embed = new EmbedBuilder();
                 embed.setTitle(":map: Map of the Week");
                 embed.addFields(

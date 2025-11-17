@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
         if (data.error) {
             if (data.error == "entry-not-found")
                 return message.channel.send(
-                    "Your query couldn't be matched with anything, please refine your query or reffer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(
+                    "Your query couldn't be matched with anything, please refine your query or refer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(
                         "CLIENT_PREFIX:",
                         client.prefix
                     )

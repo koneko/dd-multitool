@@ -13,20 +13,7 @@ exports.hidden = true;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
-    const QUOTES = [
-        "try again, maybe it'll work next time :3",
-        "wrong bot, genius :nerd:",
-        "no thanks :blush:",
-        "ask oliver, he might know what to do :shrug:",
-        "yeah, you're blacklisted. big shocker :open_mouth:",
-    ];
-
-    if (message.author.id != client.ownerID) {
-        function random(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-        const quote = QUOTES[random(0, QUOTES.length - 1)];
-        return message.channel.send(quote);
+    if (message.author.id != client.ownerID) return;
+    if (args[0] == "get") {
     }
-    console.log(await new Blacklist().get());
 };

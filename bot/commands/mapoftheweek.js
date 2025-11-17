@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, Client, Message } = require("discord.js");
 
 exports.name = "mapoftheweek";
 exports.description =
@@ -39,6 +39,7 @@ function getNextTuesdayUTC() {
  * @param {string[]} args
  */
 exports.run = (client, message, args) => {
+    const OLIVER_SPECIAL_ID = 348020842183262208;
     if (!client.sharedEndpoint)
         return message.channel.send(
             "client.sharedEndpoint is not set, please ping shiro."
@@ -48,7 +49,11 @@ exports.run = (client, message, args) => {
             .then((d) => d.json())
             .then((data) => {
                 let nextMap = ":question: :question: :question:";
-                if (args[0] == "force" && message.author.id == client.ownerID)
+                if (
+                    args[0] == "force" &&
+                    (message.author.id == client.ownerID ||
+                        message.author.id == OLIVER_SPECIAL_ID)
+                )
                     nextMap = `__**${data.next.friendlyName}**__`;
                 let embed = new EmbedBuilder();
                 embed.setTitle(":map: Map of the Week");

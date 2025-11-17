@@ -1,38 +1,43 @@
 const log = require("./log");
-function change(obj) {
-    if (!process.env.SHARED_ENDPOINT) {
-        log.db(
-            "process.env.SHARED_ENDPOINT is undefined, database related functions might not work."
-        );
-        return null;
+function call(obj) {
+    try {
+        if (!process.env.SHARED_ENDPOINT) {
+            log.db(
+                "process.env.SHARED_ENDPOINT is undefined, database related functions might not work."
+            );
+            return null;
+        }
+        return fetch(process.env.SHARED_ENDPOINT + "database", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(obj),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                return data;
+            });
+    } catch (e) {
+        console.log(e);
     }
-    return fetch(process.env.SHARED_ENDPOINT + "database", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(obj),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            return data;
-        });
 }
 
 class Blacklist {
-    async get() {
-        const res = await change({
+    static async get() {
+        let res = await call({
             table: "Blacklist",
             action: "get",
         });
+        res = res.map((arr) => arr.BlacklistedUserDiscordID);
         return res;
     }
-    async addToList(id, expires, expirationDate) {
-        const res = await change({
+    static async addToList(discordId, expires, expirationDate) {
+        const res = await call({
             table: "Blacklist",
-            action: "add",
+            action: "set",
             data: {
-                id,
+                id: discordId,
                 expires,
                 expirationDate,
             },
@@ -41,4 +46,22 @@ class Blacklist {
     }
 }
 
-module.exports = { Blacklist };
+class BotExtra {
+    static async get() {
+        const res = await call({
+            table: "Extra",
+            action: "get",
+        });
+        return res;
+    }
+    static async set(data) {
+        const res = await call({
+            table: "Extra",
+            action: "set",
+            data,
+        });
+        return res;
+    }
+}
+
+module.exports = { Blacklist, BotExtra };

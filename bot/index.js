@@ -5,9 +5,12 @@ const {
     Collection,
     ActivityType,
 } = require("discord.js");
+const { Blacklist } = require("./db");
+const { Worker } = require("worker_threads");
 const fs = require("fs");
 const log = require("./log");
 const analytics = require("./analytics");
+const worker = new Worker("./worker.js");
 let cfg = {};
 try {
     cfg = require("./config.json");
@@ -17,7 +20,6 @@ try {
     );
 }
 const REACTION_URL = "https://drive.overflow.fun/public/react.json";
-const BLACKLIST_URL = "https://drive.overflow.fun/public/blacklist.json";
 const token = process.env.TOKEN || cfg.TOKEN;
 const prefix = process.env.PREFIX || cfg.PREFIX;
 const client = new Client({
@@ -92,6 +94,11 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
+worker.on("message", (data) => {
+    const { list } = data;
+    client.blacklistedUserIDs = list;
+});
+
 client.once(Events.ClientReady, async (readyClient) => {
     try {
         const res = await fetch(REACTION_URL);
@@ -105,16 +112,7 @@ client.once(Events.ClientReady, async (readyClient) => {
         console.warn("Unable to fetch reactions. copyparty might be down.");
     }
 
-    try {
-        const res = await fetch(BLACKLIST_URL);
-        const data = await res.json();
-
-        client.blacklistedUserIDs = data;
-    } catch (e) {
-        console.warn(
-            "Unable to fetch blacklisted users. copyparty might be down."
-        );
-    }
+    client.blacklistedUserIDs = await Blacklist.get();
 
     client.user.setPresence({
         activities: [

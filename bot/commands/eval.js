@@ -6,6 +6,29 @@ exports.example = "CLIENT_PREFIX:eval process.uptime()";
 exports.aliases = ["evaluate"];
 exports.hidden = true;
 
+// This function cleans up and prepares the
+// result of our eval command input for sending
+// to the channel
+const clean = async (text) => {
+    // If our input is a promise, await it before continuing
+    if (text && text.constructor.name == "Promise") text = await text;
+
+    // If the response isn't a string, `util.inspect()`
+    // is used to 'stringify' the code in a safe way that
+    // won't error out on objects with circular references
+    // (like Collections, for example)
+    if (typeof text !== "string")
+        text = require("util").inspect(text, { depth: 1 });
+
+    // Replace symbols with character code alternatives
+    text = text
+        .replace(/`/g, "`" + String.fromCharCode(8203))
+        .replace(/@/g, "@" + String.fromCharCode(8203));
+
+    // Send off the cleaned up result
+    return text;
+};
+
 /**
  *
  * @param {Client} client
@@ -18,18 +41,17 @@ exports.run = async (client, message, args) => {
     // from https://anidiots.guide/examples/making-an-eval-command cause im lazy
 
     try {
-        let evaled = eval(args.join(" "));
-        if (evaled) {
-            if (evaled.constructor.name == "Promise") evaled = await evaled;
-            if (typeof evaled !== "string")
-                evaled = require("util").inspect(evaled, { depth: 1 });
-            evaled = evaled
-                .replace(/`/g, "`" + String.fromCharCode(8203))
-                .replace(/@/g, "@" + String.fromCharCode(8203));
-        }
+        // Evaluate (execute) our input
+        const evaled = eval(args.join(" "));
 
-        return message.channel.send(`\`\`\`js\n${evaled}\n\`\`\``);
+        // Put our eval result through the function
+        // we defined above
+        const cleaned = await clean(evaled);
+
+        // Reply in the channel with our result
+        message.channel.send(`\`\`\`js\n${cleaned}\n\`\`\``);
     } catch (err) {
-        return message.channel.send(`\`ERROR\` \`\`\`xl\n${evaled}\n\`\`\``);
+        // Reply in the channel with our error
+        message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
     }
 };

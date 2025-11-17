@@ -47,6 +47,12 @@ const knowledge = [
         content:
             "If you CAN'T host your own matches but CAN join other people's, disable all network adapters but your primary internet connection in your Network and Sharing Centre section of the Control Panel. If this does not work, try disabling any potentially active tunneling engine on your computer, most often created by a VPN or Hamachi. There is an alternate method to fixing this issue pinned in <#556864412338749440> for more advanced users who would like a better permanent solution.",
     },
+    {
+        topic: "mismatch",
+        title: "Is the game talking about some package mismatch?",
+        content:
+            'Package mismatches happen most often when either you or the person you are trying to join played a custom map on **"Open"** without restarting their game. The person who had been playing custom maps must restart their game. \nIf this does not fix the error, one or both of you may need to delete all the contents of your **CookedMods** folder found within the **UDKGame** folder in your installation folder and unsubscribe to those mods on the workshop so steam will not re-download it.\nYou could also try verifying your game cache, Steam Library, right-click the game, select "Properties," then "Installed Files," and click "Verify integrity of game files...".',
+    },
 ];
 
 export const get = async (req, res) => {

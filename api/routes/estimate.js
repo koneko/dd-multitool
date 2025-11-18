@@ -90,6 +90,26 @@ const priceTable = [
         ],
     },
     {
+        regex: /\b(?:hermit's swallow|swallow|hermit swallow)\b/i,
+        returnKeyWord: "hermit's swallow",
+        prices: ["192000;25", "199000;100", "210000;400"],
+    },
+    {
+        regex: /\b(?:builder hermit|herm|hermit)\b/i,
+        returnKeyWord: "builder hermit piece", // blame SoL
+        prices: [
+            "2000;13",
+            "2050;17",
+            "2100;25",
+            "2150;40",
+            "2200;75",
+            "2250;110",
+            "2300;125",
+            "2350;500",
+            "2400;1000",
+        ],
+    },
+    {
         regex: /\b(?:aura|trange|range|monk)\b/i,
         returnKeyWord: "aura/trange piece",
         prices: [
@@ -197,11 +217,6 @@ const priceTable = [
         regex: /\b(?:madness boulder thrower|mbt)\b/i,
         returnKeyWord: "madness boulder thrower",
         prices: ["914;20", "974;100", "988;150"],
-    },
-    {
-        regex: /\b(?:hermit's swallow|swallow|hermit swallow)\b/i,
-        returnKeyWord: "hermit's swallow",
-        prices: ["192000;25", "199000;100", "210000;400"],
     },
     {
         regex: /\b(?:calamity blade|cblade|cb)\b/i,

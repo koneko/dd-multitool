@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
             )
         );
     let scalar = 1.0;
-    if (stat > 5000) {
+    if (stat > 1000) {
         scalar += stat / 5000;
     }
     const HeroRadiusScalingStat =

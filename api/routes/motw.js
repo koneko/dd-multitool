@@ -45,7 +45,7 @@ const maps = [
     { friendlyName: "Sky Spooktacular", eit: "SKYSPK" },
     { friendlyName: "Arcane Library", eit: "CDTARC" },
     { friendlyName: "Sky City", eit: "CAMPSC" },
-    { friendlyName: "The Great Turkey Hunt!", eit: "SPECTH" },
+    { friendlyName: "Crystalline Dimension", eit: "CAMPCL" },
     { friendlyName: "The Greater Turkey Hunt!", eit: "SPECT2" },
     { friendlyName: "Lifestream Hollow", eit: "LIFHOL" },
     { friendlyName: "Winter Wonderland", eit: "CAMPX2" },

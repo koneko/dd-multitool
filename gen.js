@@ -1,5 +1,5 @@
 const fs = require("fs");
-let stringoutput = "stat,range\n";
+let output = "stat,range\n";
 
 for (let stat = 0; stat < 9000; stat++) {
     let scalar = 1.0;
@@ -11,7 +11,7 @@ for (let stat = 0; stat < 9000; stat++) {
         0.66 * (Math.min(parseInt(stat + 1), 4) ** 0.0825 - 1.0) +
         0.75 * ((stat + 1) ** 0.3375 - 1.0);
     const range = 500 * HeroRadiusScalingStat ** 0.5 * scalar;
-    stringoutput += stat + "," + Math.round(range * 100) / 100 + "\n";
+    output += stat + "," + Math.round(range * 100) / 100 + "\n";
 }
 
-fs.writeFileSync("output.csv", stringoutput);
+fs.writeFileSync("output.csv", output);

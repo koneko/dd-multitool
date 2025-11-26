@@ -34,6 +34,12 @@ const DDRNG_ALLOWED_CHANNELS = [
     496061346446835732, 499656239572058132, 771329671953776661,
     556864412338749440,
 ];
+const DDRNG_SPECIAL_ROLES = [
+    634979100196339712, // Admins
+    192066560410517505, // Mods unhoisted role
+    1035187756223172669, // Moderators hoisted role
+    979954082913599638, // Dyno Commands
+];
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
 const QUOTES = [
     "tboob is too rare, i hope this is good enough for you",
@@ -180,8 +186,11 @@ client.on(Events.MessageCreate, async (message) => {
     }
     if (
         message.guildId == DDRNG_GUILD_ID &&
+        message.author.id != client.ownerID &&
         !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId) &&
-        message.author.id != client.ownerID
+        message.member.roles.cache.filter((role) =>
+            DDRNG_SPECIAL_ROLES.includes(role.id)
+        ).length == 0
     )
         return;
 

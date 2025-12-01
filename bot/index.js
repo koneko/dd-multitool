@@ -189,7 +189,7 @@ client.on(Events.MessageCreate, async (message) => {
         !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId) &&
         message.member.roles.cache.filter((role) =>
             DDRNG_SPECIAL_ROLES.includes(role.id)
-        ).length > 0
+        ).length == 0
     )
         return;
 

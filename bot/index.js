@@ -186,10 +186,10 @@ client.on(Events.MessageCreate, async (message) => {
     if (
         message.guildId == DDRNG_GUILD_ID &&
         message.author.id != client.ownerID &&
-        !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId) &&
-        message.member.roles.cache.filter((role) =>
-            DDRNG_SPECIAL_ROLES.includes(role.id)
-        ).length == 0
+        !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId)
+        // message.member.roles.cache.filter((role) =>
+        //     DDRNG_SPECIAL_ROLES.includes(role.id)
+        // ).length == 0
     )
         return;
 

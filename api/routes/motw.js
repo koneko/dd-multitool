@@ -1,5 +1,5 @@
 const maps = [
-    { friendlyName: "Wintermire", eit: "CDTWIM" },
+    { friendlyName: "Campagin Silent Night", eit: "CDTSIL" },
     { friendlyName: "Crystal Escore: Wandering Heart", eit: "VDAY04" },
     { friendlyName: "Akatiti Jungle", eit: "CAMPJ2" },
     { friendlyName: "The Love Machine", eit: "CDTVAL" },
@@ -48,9 +48,9 @@ const maps = [
     { friendlyName: "Crystalline Dimension", eit: "CAMPCL" },
     { friendlyName: "The Greater Turkey Hunt!", eit: "SPECT2" },
     { friendlyName: "Lifestream Hollow", eit: "LIFHOL" },
-    { friendlyName: "Winter Wonderland", eit: "CAMPX2" },
+    { friendlyName: "Wintermire", eit: "CDTWIM" },
     { friendlyName: "Frostdale Wonderland", eit: "CWWEHE" },
-    { friendlyName: "Silent Night", eit: "SPECX2" },
+    { friendlyName: "Winter Wonderland", eit: "CAMPX2" },
     { friendlyName: "Workshop Assault", eit: "CDTTWA" },
 ];
 

@@ -5,3 +5,4 @@ api.tar
 web.tar
 fake/
 .env
+log.txt

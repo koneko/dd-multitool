@@ -51,7 +51,8 @@ const maps = [
     { friendlyName: "Wintermire", eit: "CDTWIM" },
     { friendlyName: "Frostdale Wonderland", eit: "CWWEHE" },
     { friendlyName: "Winter Wonderland", eit: "CAMPX2" },
-    { friendlyName: "Workshop Assault", eit: "CDTTWA" },
+    // { friendlyName: "Workshop Assault", eit: "CDTTWA" },
+    { friendlyName: "Campagin Silent Night", eit: "CDTSIL" },
 ];
 
 function getOrdinalDateStringUTC(date = new Date()) {

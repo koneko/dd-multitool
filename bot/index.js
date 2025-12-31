@@ -72,11 +72,6 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
-worker.on("message", (data) => {
-    const { list } = data;
-    client.blacklistedUserIDs = list;
-});
-
 client.once(Events.ClientReady, async (readyClient) => {
     try {
         const res = await fetch(REACTION_URL);

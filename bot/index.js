@@ -5,12 +5,10 @@ const {
     Collection,
     ActivityType,
 } = require("discord.js");
-const { Blacklist } = require("./db");
 const { Worker } = require("worker_threads");
 const fs = require("fs");
 const log = require("./log");
 const analytics = require("./analytics");
-const worker = new Worker("./worker.js");
 let cfg = {};
 try {
     cfg = require("./config.json");
@@ -43,32 +41,7 @@ const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
 const QUOTES = [
     "tboob is too rare, i hope this is good enough for you",
     "Banned <@399275582401282048> ",
-    "Muted {author} for 67 seconds",
-    "why am i half-paid? i demand no pay! no pay!",
-    "time to hop on RL RG PS for the 500th time today, wish me luck :pepega:",
-    "yes, sesar IS drunk again",
-    "thank you {author} for your many contributions to this community",
-    "no.",
-    "tigi: >.<",
-    "mrrp mrrp meow",
-    "tbolt is a gamer who rawdogs rust",
-    "if you see this, good for you :)",
-    "have a cookie :cookie:",
-    "With 21 upgrades spent in resistances, your piece will reach 1285, or 1800 with set bonus! :tada:",
-    "WOAH, **I** am replying to Tbot's command? DAMN THATS CRAZY",
-    ":nerd: the chance of getting a reply is 1/10 :nerd:",
-    "i sometimes choose not to react, teehee :P",
-    "mmm i love ++ items :yum:",
-    "stop it >:(",
-    "im just as good as tbot i swear :sob:",
-    "i feel ill at ease... almost like sesar is drunk, again.",
-    "1/10 chance i say, 1/10.",
-    "hop on gtfo",
-    "any @TWA gamers?",
-    "any poly gamers?",
-    "im busy making divine crystals, go away :disappointed:",
-    "Muted <@837309149271425027> for 1 hour, disobedient :(",
-    "thank you for reporting a mana hacker, please contact obama for a free event item (bling bling bracers)",
+    "i will be replaced by c++++ bot :(",
 ];
 
 client.commands = new Collection();
@@ -116,8 +89,6 @@ client.once(Events.ClientReady, async (readyClient) => {
     } catch (e) {
         console.warn("Unable to fetch reactions. copyparty might be down.");
     }
-
-    client.blacklistedUserIDs = await Blacklist.get();
 
     client.user.setPresence({
         activities: [

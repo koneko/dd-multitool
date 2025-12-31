@@ -1,5 +1,4 @@
 const { Message, Client } = require("discord.js");
-const { BotExtra } = require("../db");
 exports.name = "voiceoftheheavens";
 exports.description = ":angel: Speak through the mouth of someone else.";
 exports.usage = "CLIENT_PREFIX:voiceoftheheavens [action] [message]";

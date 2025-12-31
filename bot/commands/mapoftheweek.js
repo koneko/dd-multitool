@@ -1,5 +1,5 @@
 const { EmbedBuilder, Client, Message } = require("discord.js");
-
+const mapArray = require("../maps.json");
 exports.name = "mapoftheweek";
 exports.description =
     ":map: Displays previous, current (and soon next) map of the week.";
@@ -7,7 +7,7 @@ exports.usage = "CLIENT_PREFIX:mapoftheweek";
 exports.example = "CLIENT_PREFIX:mapoftheweek\nCLIENT_PREFIX:motw";
 exports.aliases = ["motw"];
 exports.hidden = false;
-function getNextTuesdayUTC() {
+function getTimeChange() {
     const now = new Date();
     const dayOfWeek = now.getUTCDay();
     const jan = new Date(`7.1.${now.getUTCFullYear()} 00:00:00 UTC+0`);
@@ -32,6 +32,12 @@ function getNextTuesdayUTC() {
     // Return Unix timestamp (seconds since epoch)
     return Math.floor(nextTuesday.getTime() / 1000);
 }
+
+function findMap(eit) {
+    let map = mapArray.find((map) => map.eit == eit);
+    if (!map) map = "Couldn't find map with eit: " + eit;
+    return map;
+}
 /**
  *
  * @param {Client} client
@@ -39,23 +45,16 @@ function getNextTuesdayUTC() {
  * @param {string[]} args
  */
 exports.run = (client, message, args) => {
-    const OLIVER_SPECIAL_ID = 348020842183262208;
-    if (!client.sharedEndpoint)
-        return message.channel.send(
-            "client.sharedEndpoint is not set, please ping shiro."
-        );
     try {
-        fetch(client.sharedEndpoint + "motw")
+        fetch("http://66.42.84.191/api/json/utc/now")
             .then((d) => d.json())
             .then((data) => {
-                let nextMap = ":question: :question: :question:";
-                if (
-                    args[0] == "force" &&
-                    (message.author.id == client.ownerID ||
-                        message.author.id == OLIVER_SPECIAL_ID)
-                ) {
-                    nextMap = `__**${data.next.friendlyName}**__`;
-                    nextMap = "but oliver said not to leak anymore...";
+                let extraMap =
+                    "*Currently there is no extra Map of the Week...*";
+                if (data.extraMapOfTheWeek != "AAAAAA") {
+                    extraMap = `:fire: ${
+                        findMap(data.extraMapOfTheWeek).friendlyName
+                    } :fire:`;
                 }
                 let embed = new EmbedBuilder();
                 embed.setTitle(":map: Map of the Week");
@@ -64,22 +63,18 @@ exports.run = (client, message, args) => {
                         name: "What is Map of the Week?",
                         value:
                             "Every week, one map will be picked as Map of the Week. It's name will be colored blue and all drops (except for chest drops) on campaign/survival/pure strategy will be **doubled**.\nMap of the Week changes " +
-                            `**<t:${getNextTuesdayUTC()}:R>**.`,
-                    },
-                    {
-                        name: "Previous Map of the Week",
-                        value: `*${data.prev.friendlyName}*`,
+                            `**<t:${getTimeChange()}:R>**.`,
                     },
                     {
                         name: "Current Map of the Week",
                         value:
                             ":exclamation: **" +
-                            data.curr.friendlyName +
+                            findMap(data.mapOfTheWeek).friendlyName +
                             "** :exclamation:",
                     },
                     {
-                        name: "Next Map of the Week",
-                        value: nextMap,
+                        name: "Extra Map of the Week",
+                        value: extraMap,
                     }
                 );
                 return message.channel.send({ embeds: [embed] });

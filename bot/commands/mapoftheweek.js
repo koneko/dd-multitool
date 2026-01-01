@@ -10,7 +10,7 @@ exports.hidden = false;
 function getTimeChange() {
     const now = new Date();
     const dayOfWeek = now.getUTCDay();
-    const jan = new Date(`7.1.${now.getUTCFullYear()} 00:00:00 UTC+0`);
+    const jan = new Date(`8.1.${now.getUTCFullYear()} 00:00:00 UTC+0`);
     const firstWeek = jan.getUTCDay();
     let daysUntilTuesday = (firstWeek - dayOfWeek + 7) % 7;
     if (daysUntilTuesday === 0) {

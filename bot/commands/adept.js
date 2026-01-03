@@ -4,7 +4,7 @@ exports.description = "CLIENT_PREFIX:abc";
 exports.usage = "CLIENT_PREFIX:abcd";
 exports.example = "CLIENT_PREFIX:abc";
 exports.aliases = [];
-exports.hidden = false;
+exports.hidden = true;
 /**
  *
  * @param {Client} client

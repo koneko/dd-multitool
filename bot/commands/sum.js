@@ -3,7 +3,7 @@ exports.description = ":1234: Calculate the sum of numbers.";
 exports.usage = "CLIENT_PREFIX:sum [as many numbers as you want]";
 exports.example = "CLIENT_PREFIX:sum 100 100";
 exports.aliases = [];
-exports.hidden = false;
+exports.hidden = true;
 /**
  *
  * @param {Client} client

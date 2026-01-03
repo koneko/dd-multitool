@@ -3,7 +3,7 @@ exports.description = ":cat: Calculates boost for cat.";
 exports.usage = "CLIENT_PREFIX:cat <boost> <levels>";
 exports.example = "CLIENT_PREFIX:cat 80 120";
 exports.aliases = [];
-exports.hidden = false;
+exports.hidden = true;
 /**
  *
  * @param {Client} client

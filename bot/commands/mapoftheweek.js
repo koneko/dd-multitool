@@ -52,9 +52,9 @@ exports.run = (client, message, args) => {
                 let extraMap =
                     "*Currently there is no extra Map of the Week...*";
                 if (data.extraMapOfTheWeek != "AAAAAA") {
-                    extraMap = `:fire: ${
+                    extraMap = `:fire: **${
                         findMap(data.extraMapOfTheWeek).friendlyName
-                    } :fire:`;
+                    }** :fire:`;
                 }
                 let embed = new EmbedBuilder();
                 embed.setTitle(":map: Map of the Week");

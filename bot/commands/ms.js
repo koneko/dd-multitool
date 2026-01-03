@@ -5,7 +5,7 @@ exports.description =
 exports.usage = "CLIENT_PREFIX:ms <elemental damage> <ups> [projectile speed]";
 exports.example = "CLIENT_PREFIX:ms 10000 250 10000";
 exports.aliases = [];
-exports.hidden = false;
+exports.hidden = true;
 /**
  *
  * @param {Client} client

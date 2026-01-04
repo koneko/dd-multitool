@@ -12,6 +12,8 @@ exports.hidden = true;
  * @param {string[]} args
  */
 exports.run = (client, message, args) => {
+    if (message.author.id != client.ownerID)
+        return message.channel.send("wrong bot bruh");
     if (!args[0])
         return message.channel.send(
             "Not enough arguments, consult CLIENT_PREFIX:help.".replaceAll(

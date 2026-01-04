@@ -37,7 +37,7 @@ const clean = async (text) => {
  */
 exports.run = async (client, message, args) => {
     if (message.author.id != client.ownerID)
-        return message.channel.send("you really think i'd let you do that?");
+        return message.channel.send("fak you bradar");
     // from https://anidiots.guide/examples/making-an-eval-command cause im lazy
 
     try {

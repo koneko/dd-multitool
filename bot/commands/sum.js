@@ -11,6 +11,8 @@ exports.hidden = true;
  * @param {string[]} args
  */
 exports.run = (client, message, args) => {
+    if (message.author.id != client.ownerID)
+        return message.channel.send("wrong bot bruh");
     let is1nan = false;
     if (!args[0])
         return message.channel.send(

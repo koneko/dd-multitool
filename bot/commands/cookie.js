@@ -14,6 +14,8 @@ exports.hidden = false;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
+    if (message.author.id != client.ownerID)
+        return message.channel.send("wrong bot bruh");
     if (message.mentions.members.size > 0) {
         return message.channel.send(
             "You gave a :cookie: to <@" +

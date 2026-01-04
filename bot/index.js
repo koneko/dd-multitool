@@ -39,7 +39,7 @@ const DDRNG_SPECIAL_ROLES = [
 ];
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
 const QUOTES = [
-    "tboob is too rare, i hope this is good enough for you",
+    "sorry, you've been removed from the ddt. L bozo",
     "Banned <@399275582401282048> ",
     "i will be replaced by c++++ bot :(",
 ];

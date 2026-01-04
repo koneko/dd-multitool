@@ -51,7 +51,7 @@ exports.run = (client, message, args) => {
         [...client.commands.values()]
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .forEach((cmd) => {
-                if (cmd.hidden && message.author.id != client.ownerID) return;
+                if (cmd.hidden) return;
                 embed.addFields({
                     name: cmd.name,
                     value: cmd.description.replaceAll(
@@ -60,7 +60,6 @@ exports.run = (client, message, args) => {
                     ),
                 });
             });
-        embed.setFooter({ text: "Website URL: https://ddmt.overflow.fun" });
     }
     embed.setColor(0x00ff00);
     return message.channel.send({ embeds: [embed] });

@@ -1,8 +1,7 @@
 const { EmbedBuilder, Client, Message } = require("discord.js");
 const mapArray = require("../maps.json");
 exports.name = "mapoftheweek";
-exports.description =
-    ":map: Displays previous, current (and soon next) map of the week.";
+exports.description = ":map: Displays the map of the week.";
 exports.usage = "CLIENT_PREFIX:mapoftheweek";
 exports.example = "CLIENT_PREFIX:mapoftheweek\nCLIENT_PREFIX:motw";
 exports.aliases = ["motw"];

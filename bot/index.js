@@ -38,11 +38,6 @@ const DDRNG_SPECIAL_ROLES = [
     979954082913599638, // Dyno Commands
 ];
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
-const QUOTES = [
-    "sorry, you've been removed from the ddt. L bozo",
-    "Banned <@399275582401282048> ",
-    "i will be replaced by c++++ bot :(",
-];
 
 client.commands = new Collection();
 client.ownerID = 263247134147608578;
@@ -113,15 +108,6 @@ client.on(Events.MessageCreate, async (message) => {
                 }
             }
         });
-    if (message.content == "<<sesarisdrunkagain") {
-        function random(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-        const quote = QUOTES[random(0, QUOTES.length - 1)];
-        const rand = random(1, 12);
-        if (rand != 1 && message.author.id != client.ownerID) return;
-        message.reply(quote.replace("{author}", `<@${message.author.id}>`));
-    }
     // if we are in wheelchairs server, allow use of the `cprefix`.
     if (
         message.content.indexOf(prefix) !== 0 &&

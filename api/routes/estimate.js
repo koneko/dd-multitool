@@ -134,7 +134,7 @@ const priceTable = [
         prices: ["999;10"],
     },
     {
-        regex: /\b(?:ev|tdmg|tdamage)\b/i,
+        regex: /\b(?:ev|tdmg|tdamage|tower damage)\b/i,
         returnKeyWord: "builder ev/tower damage piece",
         prices: [
             "1000;5",

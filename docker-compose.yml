@@ -10,6 +10,8 @@ services:
             - /opt/api/database:/opt
         networks:
             - dundef-tool
+        ports:
+            - 2000:2000
     web:
         restart: unless-stopped
         image: dd-multitool-web:latest

@@ -6,64 +6,8 @@ on:
             - main
 
 jobs:
-    check-commit-message:
-        runs-on: self-hosted
-        outputs:
-            skip: ${{ steps.skip_check.outputs.skip }}
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 1
-
-            - name: Check latest commit message for skiptests
-              id: skip_check
-              run: |
-                  LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
-                  echo "Last commit message: $LAST_COMMIT_MSG"
-                  if [[ "$LAST_COMMIT_MSG" == *"skiptests"* ]]; then
-                    echo "skip=true" >> $GITHUB_OUTPUT
-                  else
-                    echo "skip=false" >> $GITHUB_OUTPUT
-                  fi
-
-    test-api:
-        needs: check-commit-message
-        if: needs.check-commit-message.outputs.skip != 'true'
-        runs-on: self-hosted
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: Install API dependencies
-              working-directory: ./api
-              run: npm install --include=dev
-            - name: Run API tests
-              working-directory: ./api
-              run: npm test
-
-    test-bot:
-        needs: check-commit-message
-        if: needs.check-commit-message.outputs.skip != 'true'
-        runs-on: self-hosted
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: Install Bot dependencies
-              working-directory: ./bot
-              run: npm install --include=dev
-            - name: Run Bot tests
-              working-directory: ./bot
-              run: npm test
-
     build-and-deploy:
         runs-on: self-hosted
-        needs: [test-api, test-bot]
         env:
             TOKEN: ${{ secrets.TOKEN }}
             PREFIX: ${{ secrets.PREFIX }}

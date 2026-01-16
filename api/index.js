@@ -11,6 +11,7 @@ import {
 import { Worker } from "worker_threads";
 import Database from "better-sqlite3";
 import bodyParser from "body-parser";
+import cors from "cors";
 if (existsSync(".env")) process.loadEnvFile(".env");
 const PORT = process.env.PORT || 2000;
 const DATABASE_PATH = process.env.DATABASE_PATH;
@@ -26,7 +27,7 @@ if (process.env.NODE_ENV !== "test") {
             throw "Environment variable DATABASE_PATH MUST END WITH / or \\\\ or \\ to ensure proper Sqlite function.";
         }
         console.log(
-            "DATABASE_PATH enviroment variable is set to: " + DATABASE_PATH
+            "DATABASE_PATH enviroment variable is set to: " + DATABASE_PATH,
         );
         try {
             accessSync(DATABASE_PATH, constants.W_OK | constants.R_OK);
@@ -42,11 +43,11 @@ if (process.env.NODE_ENV !== "test") {
         console.log("Disk database user_version: " + version);
         if (DATABASE_VERSION != version) {
             console.log(
-                "Old version detected! Attempting to upgrade database!"
+                "Old version detected! Attempting to upgrade database!",
             );
             writeFileSync(
                 DATABASE_PATH + `v${version}.app.db.bak`,
-                readFileSync(DATABASE_PATH + "app.db")
+                readFileSync(DATABASE_PATH + "app.db"),
             );
             const files = readdirSync("./tables/");
             for (let i = version; i < DATABASE_VERSION; i++) {
@@ -62,6 +63,7 @@ if (process.env.NODE_ENV !== "test") {
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 app.use(function (req, res, next) {
     if (process.env.NODE_ENV !== "test") res.locals.db = db;
     next();

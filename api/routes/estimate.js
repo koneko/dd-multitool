@@ -318,6 +318,82 @@ export const get = async (req, res) => {
         });
         return res.json(tbl);
     }
+    const mass = req.query.mass;
+    if (mass != undefined && mass.replace(" ", "").length != 0) {
+        try {
+            const data = JSON.parse(mass);
+            const outputPrices = [];
+            data.forEach((item) => {
+                let entryFound = false;
+                let estimatedPrice = 0;
+                let subtable, closestInTable;
+                let gameValue = -1;
+                let returnKeyWord = "";
+                let isLastInTable = false;
+
+                item.split(" ").forEach((arg) => {
+                    if (gameValue == -1 && validateNum(arg)) {
+                        gameValue = validateNum(arg);
+                    }
+                });
+
+                if (gameValue == -1) {
+                    return outputPrices.push({
+                        estimatedPrice: null,
+                        closestInTable: null,
+                        isLastInTable: null,
+                        error: "gameValue-not-found",
+                    });
+                }
+
+                priceTable.forEach((price, idx) => {
+                    if (price.regex.test(item.trim()) && !entryFound) {
+                        entryFound = true;
+                        returnKeyWord = price.returnKeyWord;
+                        subtable = constructPriceSubTable(idx);
+                        closestInTable = findClosestPrice(subtable, gameValue);
+                        estimatedPrice = Math.round(
+                            weightedInterpolatePrice(subtable, gameValue)
+                        );
+                        if (
+                            closestInTable.idx == 0 &&
+                            closestInTable.diff > 100
+                        ) {
+                            estimatedPrice = 0;
+                        }
+                        if (estimatedPrice < 0) {
+                            estimatedPrice = 0;
+                        }
+                        if (estimatedPrice > 100000) {
+                            estimatedPrice = 100000;
+                        }
+                        if (closestInTable.idx == subtable.length - 1) {
+                            isLastInTable = true;
+                        }
+                    }
+                });
+                if (entryFound) {
+                    outputPrices.push({
+                        estimatedPrice,
+                        closestInTable,
+                        isLastInTable,
+                        error: null,
+                    });
+                } else
+                    outputPrices.push({
+                        estimatedPrice: null,
+                        closestInTable: null,
+                        isLastInTable: null,
+                        error: "price-not-found",
+                    });
+            });
+            return res.json(outputPrices);
+        } catch (e) {
+            return res.status(400).json({
+                error: "mass should be a JSON array of strings, not anything else.",
+            });
+        }
+    }
 
     const combined = req.query.q;
     if (!combined || combined.replace(" ", "").length == 0)

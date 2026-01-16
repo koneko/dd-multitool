@@ -37,8 +37,9 @@ const priceTable = [
             "1450;35",
             "1500;50",
             "1550;75",
-            "1580;150",
-            "1600;250",
+            "1580;120",
+            "1590;130",
+            "1600;150",
             "1650;500",
             "1700;1000",
             "1750;2000",
@@ -195,7 +196,14 @@ const priceTable = [
     {
         regex: /\b(?:gw armor|gw|gunwitch|gunwitch armor)\b/i,
         returnKeyWord: "gunwitch armor",
-        prices: ["1484;35", "1500;40", "1550;60", "1600;250", "1700;500"],
+        prices: [
+            "1484;35",
+            "1500;40",
+            "1550;60",
+            "1580;120",
+            "1600;250",
+            "1700;500",
+        ],
     },
     {
         regex: /\b(?:witch's broom|broom|witch broom)\b/i,
@@ -353,7 +361,7 @@ export const get = async (req, res) => {
                         subtable = constructPriceSubTable(idx);
                         closestInTable = findClosestPrice(subtable, gameValue);
                         estimatedPrice = Math.round(
-                            weightedInterpolatePrice(subtable, gameValue)
+                            weightedInterpolatePrice(subtable, gameValue),
                         );
                         if (
                             closestInTable.idx == 0 &&
@@ -426,7 +434,7 @@ export const get = async (req, res) => {
             subtable = constructPriceSubTable(idx);
             closestInTable = findClosestPrice(subtable, gameValue);
             estimatedPrice = Math.round(
-                weightedInterpolatePrice(subtable, gameValue)
+                weightedInterpolatePrice(subtable, gameValue),
             );
             if (closestInTable.idx == 0 && closestInTable.diff > 100) {
                 estimatedPrice = 0;

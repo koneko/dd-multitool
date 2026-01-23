@@ -14,7 +14,7 @@ try {
     cfg = require("./config.json");
 } catch (e) {
     console.warn(
-        "config.json not found or invalid. Falling back to environment variables."
+        "config.json not found or invalid. Falling back to environment variables.",
     );
 }
 const REACTION_URL = "https://drive.overflow.fun/public/react.json";
@@ -48,12 +48,12 @@ client.usersToReactTo = [];
 client.blacklistedUserIDs = [];
 if (!client.sharedEndpoint && process.argv[2] != "--no-shared")
     return log.error(
-        "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined. (Pass --no-shared as flag to disable, be careful though!)"
+        "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined. (Pass --no-shared as flag to disable, be careful though!)",
     );
 
 if (!client.analyticsEndpoint)
     log.warn(
-        "client.analyticsEndpoint (process.env.ANALYTICS_ENDPOINT) is undefined."
+        "client.analyticsEndpoint (process.env.ANALYTICS_ENDPOINT) is undefined.",
     );
 
 fs.readdir("./commands/", (err, files) => {
@@ -130,7 +130,7 @@ client.on(Events.MessageCreate, async (message) => {
             log.info(a);
         } catch (e) {
             message.channel.send(
-                "Command " + cmd.name + " exited with an exception: " + e
+                "Command " + cmd.name + " exited with an exception: " + e,
             );
         }
         return;
@@ -145,6 +145,21 @@ client.on(Events.MessageCreate, async (message) => {
     )
         return;
 
+    if (
+        message.content.startsWith("you piss me off") ||
+        message.content.startsWith("you annoy me")
+    ) {
+        const res = await message.channel.messages.fetch({ limit: 3 });
+        const foundMessage = res.find(
+            (msg) =>
+                msg.author.bot &&
+                msg.content.startsWith("Price estimate of a "),
+        );
+        if (foundMessage) {
+            foundMessage.content.replace("Price estimate of a ", "");
+        }
+    }
+
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
@@ -152,7 +167,7 @@ client.on(Events.MessageCreate, async (message) => {
 
     if (!cmd) {
         cmd = client.commands.find((cmd) =>
-            cmd.aliases.find((alias) => alias == command)
+            cmd.aliases.find((alias) => alias == command),
         );
         if (!cmd) {
             return;
@@ -181,13 +196,13 @@ client.on(Events.MessageCreate, async (message) => {
             args,
             cmdResult.content,
             message.author.displayName,
-            client.analyticsEndpoint
+            client.analyticsEndpoint,
         );
     } catch (e) {
         try {
             log.info(e);
             message.channel.send(
-                "Command " + cmd.name + " exited with an exception: " + e
+                "Command " + cmd.name + " exited with an exception: " + e,
             );
         } catch (e2) {
             log.info("Could not send error message to server.");

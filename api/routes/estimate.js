@@ -43,12 +43,12 @@ const priceTable = [
             "1650;500",
             "1700;1000",
             "1750;2000",
-            "1800;10000",
+            "1800;5000",
         ],
     },
     {
         regex: /\b(?:tb|tower boost|adept upper)\b/i,
-        returnKeyWord: "tb/ab1 piece",
+        returnKeyWord: "tb/pure ab1 piece",
         prices: [
             "980;5",
             "1050;15",

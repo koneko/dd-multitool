@@ -6,7 +6,7 @@ exports.usage = "CLIENT_PREFIX:kb <topic>";
 exports.example =
     "CLIENT_PREFIX:kb list (lists available topics)\nCLIENT_PREFIX:kb stacking\nCLIENT_PREFIX:kb cv";
 exports.hidden = false;
-exports.aliases = [];
+exports.aliases = ["knowledge"];
 /**
  *
  * @param {Client} client
@@ -19,31 +19,31 @@ exports.run = async (client, message, args) => {
         return message.channel.send(
             "Topic argument missing, consult `CLIENT_PREFIX:help kb`.".replaceAll(
                 "CLIENT_PREFIX:",
-                client.prefix
-            )
+                client.prefix,
+            ),
         );
     }
     try {
         const result = await fetch(
-            client.sharedEndpoint + "knowledge?topic=" + topic
+            client.sharedEndpoint + "knowledge?topic=" + topic,
         );
         const data = await result.json();
         if (data.error == "topic-not-found") {
             return message.channel.send(
                 "Could not find data entry for the given topic. consult `CLIENT_PREFIX:help kb`.".replaceAll(
                     "CLIENT_PREFIX:",
-                    client.prefix
-                )
+                    client.prefix,
+                ),
             );
         }
         if (data.topics) {
             return message.channel.send(
                 `List of topics:\n\`\`\`\n${data.topics.join(
-                    "\n"
+                    "\n",
                 )}\`\`\`\nUsage: \`CLIENT_PREFIX:kb <topic>\``.replaceAll(
                     "CLIENT_PREFIX:",
-                    client.prefix
-                )
+                    client.prefix,
+                ),
             );
         }
         const { title, content } = data;
@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
         return message.channel.send({ embeds: [embed] });
     } catch (e) {
         return message.channel.send(
-            "Fetch from API returned error with `" + e + "`"
+            "Fetch from API returned error with `" + e + "`",
         );
     }
 };

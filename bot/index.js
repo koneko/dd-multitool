@@ -138,27 +138,10 @@ client.on(Events.MessageCreate, async (message) => {
     if (
         message.guildId == DDRNG_GUILD_ID &&
         message.author.id != client.ownerID &&
+        message.author.id != "498160761286164500" && // cause scryllix is my friend :)
         !DDRNG_ALLOWED_CHANNELS.find((id) => id == message.channelId)
-        // message.member.roles.cache.filter((role) =>
-        //     DDRNG_SPECIAL_ROLES.includes(role.id)
-        // ).length == 0
     )
         return;
-
-    if (
-        message.content.startsWith("you piss me off") ||
-        message.content.startsWith("you annoy me")
-    ) {
-        const res = await message.channel.messages.fetch({ limit: 3 });
-        const foundMessage = res.find(
-            (msg) =>
-                msg.author.bot &&
-                msg.content.startsWith("Price estimate of a "),
-        );
-        if (foundMessage) {
-            foundMessage.content.replace("Price estimate of a ", "");
-        }
-    }
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -170,17 +153,19 @@ client.on(Events.MessageCreate, async (message) => {
             cmd.aliases.find((alias) => alias == command),
         );
         if (!cmd) {
+            const result = await fetch(
+                client.sharedEndpoint + "knowledge?topic=list",
+            );
+            const data = await result.json();
+            const topic = data.topics.find((t) => t.startsWith(command));
+            if (!topic) return;
+            cmd = client.commands.get("kb");
+            cmd.run(client, message, [topic]);
             return;
         }
     }
 
     try {
-        // if (message.author.id != client.ownerID && client.blacklistedUserIDs) {
-        //     for (let i = 0; i < client.blacklistedUserIDs.length; i++) {
-        //         let uid = client.blacklistedUserIDs[i];
-        //         if (message.author.id == uid) return;
-        //     }
-        // }
         let cmdResult = await cmd.run(client, message, args);
         if (!cmdResult)
             cmdResult = {

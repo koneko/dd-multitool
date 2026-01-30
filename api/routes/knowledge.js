@@ -53,6 +53,12 @@ const knowledge = [
         content:
             'Package mismatches happen most often when either you or the person you are trying to join played a custom map on **"Open"** without restarting their game. The person who had been playing custom maps must restart their game. \nIf this does not fix the error, one or both of you may need to delete all the contents of your **CookedMods** folder found within the **UDKGame** folder in your installation folder and unsubscribe to those mods on the workshop so steam will not re-download it.\nYou could also try verifying your game cache, Steam Library, right-click the game, select "Properties," then "Installed Files," and click "Verify integrity of game files...".',
     },
+    {
+        topic: "zamira",
+        title: "What are Zamira rolls?",
+        content:
+            'When you play through Warping Core Pack 2, each map rewards a specific gem:\nPart 1 - Gift of Knowledge\nPart 2 - Gift of Resilience\nPart 3 - Gift of Patience\nCollecting one of each gem allows you to summon a Zamira\'s Mount, which is considered one of the best in slot for a Hero Boost Monk.\nThe difficulty you play on determines the type of gems you receive, for example Ruthless gives you a "Greater Gift" variant. The better gems give higher quality pets when summoning.\n\n**Where can they be used?**\nZamira gems are used at the Pet Forge, located on the second floor of the Tavern, in the outdoor area near the animal crates.',
+    },
 ];
 
 export const get = async (req, res) => {

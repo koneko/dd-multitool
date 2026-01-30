@@ -57,7 +57,7 @@ const knowledge = [
         topic: "zamira",
         title: "What are Zamira rolls?",
         content:
-            'When you play through Warping Core Pack 2, each map rewards a specific gem:\nPart 1 - Gift of Knowledge\nPart 2 - Gift of Resilience\nPart 3 - Gift of Patience\nCollecting one of each gem allows you to summon a Zamira\'s Mount, which is considered one of the best in slot for a Hero Boost Monk.\nThe difficulty you play on determines the type of gems you receive, for example Ruthless gives you a "Greater Gift" variant. The better gems give higher quality pets when summoning.\n\n**Where can they be used?**\nZamira gems are used at the Pet Forge, located on the second floor of the Tavern, in the outdoor area near the animal crates.',
+            'When you play through Warping Core Pack 2, each map rewards a specific gem:\nPart 1 - Gift of Knowledge\nPart 2 - Gift of Resilience\nPart 3 - Gift of Patience\nCollecting one of each gem allows you to summon a Zamira\'s Mount, which is considered one of the best in slot for a Hero Boost Monk.\nThe difficulty you play on determines the type of gems you receive, for example Ruthless gives you a "Greater Gift" variant. The better gems give higher quality pets when summoning.\n\n**Where can they be used?**\nZamira gems are used at the Pet Forge, located on the second floor of the Tavern, in the outdoor area near the animal crates.\n(credit to Scryllix for writing this)',
     },
 ];
 

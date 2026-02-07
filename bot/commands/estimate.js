@@ -50,6 +50,9 @@ exports.run = async (client, message, args) => {
         );
         const data = await result.json();
         if (data.error) {
+            return message.channel.send(
+                "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
+            );
             if (data.error == "entry-not-found")
                 return message.channel.send(
                     "Your query couldn't be matched with anything, please refine your query or refer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(

@@ -24,8 +24,8 @@ function getTimeChange() {
             0,
             0,
             0,
-            0
-        )
+            0,
+        ),
     );
 
     // Return Unix timestamp (seconds since epoch)
@@ -34,7 +34,7 @@ function getTimeChange() {
 
 function findMap(eit) {
     let map = mapArray.find((map) => map.eit == eit);
-    if (!map) map = "Couldn't find map with eit: " + eit;
+    if (!map) map.friendlyName = "Couldn't find map with eit: " + eit;
     return map;
 }
 /**
@@ -74,7 +74,7 @@ exports.run = (client, message, args) => {
                     {
                         name: "Extra Map of the Week",
                         value: extraMap,
-                    }
+                    },
                 );
                 return message.channel.send({ embeds: [embed] });
             })

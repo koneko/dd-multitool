@@ -6,6 +6,14 @@ exports.usage = "CLIENT_PREFIX:ai [description of your item]";
 exports.example = "CLIENT_PREFIX:ai what do you think about oliver";
 exports.aliases = ["lol"];
 exports.hidden = false;
+
+function cut(str, maxLength) {
+    if (str.length > maxLength) {
+        return str.substring(0, maxLength) + "...";
+    }
+    return str;
+}
+
 /**
  *
  * @param {Client} client
@@ -13,6 +21,7 @@ exports.hidden = false;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
+    if (message.author.id != client.ownerID) return;
     if (!args[0])
         return message.channel.send(
             "Not enough arguments, consult CLIENT_PREFIX:help.".replaceAll(
@@ -60,17 +69,20 @@ exports.run = async (client, message, args) => {
         message.author.id == client.ownerID
     ) {
         return message.channel.send(
-            "dbgctx: " +
-                JSON.stringify(ctx) +
-                "\nLatest message: " +
-                JSON.stringify(input),
+            cut(
+                "dbgctx: " +
+                    JSON.stringify(ctx) +
+                    "\nLatest message: " +
+                    JSON.stringify(input),
+                1999,
+            ),
         );
     } else {
         await message.channel.sendTyping();
         const response = await client.oaiClient.responses.create({
             model: "gpt-4.1-mini",
             instructions:
-                "You are a chatbot on Discord. Respond to questions and requests in a short, clear, and simple manner, without any unnecessary fluff or excessive detail. The topic of conversation generally revolves around Dungeon Defenders, so try to be on topic (feel free to use the Dungeon Defenders wiki, also only the original game, you must hate the sequel and the company behind it). However it doesn't always have to be like that, so don't blindly stick to the topic. Your response should always be under 1900 characters, including spaces, and resemble how a normal person would respond to someone in a casual conversation. Avoid long paragraphs and give only the most essential information. Be polite, but keep it brief. In each prompt, you will be provided context about the conversation (json array), just go with the flow. If for the author it says 'You' then it refers to a previous instance of you that was asked a question, so try to be cohesive. If you need to, feel free to ping people the standard Discord way (<@theirID>). If someone's message is prefixed with >< or << or >> or ? it means that they are running a command, you can ignore those messages. You MUST primarily respond to the 'Latest message' given out side the context (but still given in a json format and is generally directed at you). You should also try to respond to other messages in the context if the opportunity presents itself. If you are about to output any NSFW words, slurs or anything like that (swearing is fine) then don't and just reprimand the user.",
+                "You are a chatbot on Discord. Respond to questions and requests in a short, clear, and simple manner, without any unnecessary fluff or excessive detail. The topic of conversation generally revolves around Dungeon Defenders, so try to be on topic (feel free to use the Dungeon Defenders wiki, also only the original game, you must hate the sequel and the company behind it). However it doesn't always have to be like that, so don't blindly stick to the topic. Your response should always be under 1900 characters, including spaces, and resemble how a normal person would respond to someone in a casual conversation. Avoid long paragraphs and give only the most essential information. Be polite, but keep it brief. In each prompt, you will be provided context about the conversation (json array), so you should just go with the flow. If for the author it says 'You' then it refers to a response that you gave, so try to be cohesive. If you need to, feel free to ping people the standard Discord way (<@theirID>). If someone's message is prefixed with >< or << or >> or ? it means that they are running a command, you can ignore those messages. You MUST primarily respond to the 'Latest message' given outside the context (but still given in a json format and is generally directed at you). You should also try to respond to other messages in the context if the opportunity presents itself. If you are about to output any NSFW words, slurs or anything like that (swearing is fine) then don't output that and instead just reprimand the user.",
             input:
                 "context: " +
                 JSON.stringify(ctx) +

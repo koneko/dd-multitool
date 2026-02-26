@@ -190,11 +190,11 @@ client.on(Events.MessageCreate, async (message) => {
     } catch (e) {
         try {
             log.info(e);
-            message.channel.send(
+            await message.channel.send(
                 "Command " + cmd.name + " exited with an exception: " + e,
             );
         } catch (e2) {
-            log.info("Could not send error message to server.");
+            log.info("Could not send error message to Discord.");
             log.info(e2);
         }
     }

@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
             ctx.push({
                 author: msg.author.displayName,
                 authorId: msg.author.id,
-                message: message.content,
+                message: msg.content,
             });
         }
     });

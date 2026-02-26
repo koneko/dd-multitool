@@ -33,6 +33,7 @@ services:
         environment:
             - TOKEN=${TOKEN}
             - PREFIX=${PREFIX}
+            - OPENAI_API_KEY=${OPENAI_API_KEY}
             - SHARED_ENDPOINT=http://api:2000/
             - ANALYTICS_ENDPOINT=http://analytics:2000/
         networks:

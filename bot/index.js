@@ -9,6 +9,7 @@ const { Worker } = require("worker_threads");
 const fs = require("fs");
 const log = require("./log");
 const analytics = require("./analytics");
+const OpenAI = require("openai");
 let cfg = {};
 try {
     cfg = require("./config.json");
@@ -38,7 +39,6 @@ const DDRNG_SPECIAL_ROLES = [
     979954082913599638, // Dyno Commands
 ];
 const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
-
 client.commands = new Collection();
 client.ownerID = 263247134147608578;
 client.prefix = prefix;
@@ -46,6 +46,9 @@ client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;
 client.usersToReactTo = [];
 client.blacklistedUserIDs = [];
+client.oaiClient = new OpenAI({
+    apiKey: process.env["OPENAI_API_KEY"],
+});
 if (!client.sharedEndpoint && process.argv[2] != "--no-shared")
     return log.error(
         "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined. (Pass --no-shared as flag to disable, be careful though!)",
@@ -152,7 +155,7 @@ client.on(Events.MessageCreate, async (message) => {
         cmd = client.commands.find((cmd) =>
             cmd.aliases.find((alias) => alias == command),
         );
-        if (!cmd) {
+        if (!cmd && client.sharedEndpoint != null) {
             const result = await fetch(
                 client.sharedEndpoint + "knowledge?topic=list",
             );

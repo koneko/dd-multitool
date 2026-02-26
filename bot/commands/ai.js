@@ -25,8 +25,8 @@ exports.run = async (client, message, args) => {
         author: message.author.displayName,
         authorId: message.author.id,
         content: args.join(" "),
-        messageId: msg.id,
-        reference: msg.reference.messageId,
+        messageId: message.id,
+        reference: message.reference.messageId,
     };
     const discordCtx = await message.channel.messages.fetch({ limit: 10 });
     const ctx = [];

@@ -13,8 +13,6 @@ exports.hidden = false;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
-    if (message.author.id != client.ownerID)
-        return message.channel.send("you're not shiro yet, chill tf out yo");
     if (!args[0])
         return message.channel.send(
             "Not enough arguments, consult CLIENT_PREFIX:help.".replaceAll(

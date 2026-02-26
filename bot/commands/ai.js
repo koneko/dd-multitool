@@ -46,12 +46,22 @@ exports.run = async (client, message, args) => {
         }
     });
 
-    const m = await message.channel.send(":thinking: Thinking...");
+    // await message.channel.send(
+    //     "context: " +
+    //         JSON.stringify(ctx) +
+    //         "\nLatest message: " +
+    //         JSON.stringify(input),
+    // );
+    await message.channel.sendTyping();
     const response = await client.oaiClient.responses.create({
         model: "gpt-4.1-mini",
         instructions:
             "You are a chatbot on Discord. Respond to questions and requests in a short, clear, and simple manner, without any unnecessary fluff or excessive detail. The topic of conversation generally revolves around Dungeon Defenders, so try to be on topic (feel free to use the Dungeon Defenders wiki, also only the original game, you must hate the sequel and the company behind it). However it doesn't always have to be like that, so don't blindly stick to the topic. Your response should always be under 1900 characters, including spaces, and resemble how a normal person would respond to someone in a casual conversation. Avoid long paragraphs and give only the most essential information. Be polite, but keep it brief. In each prompt, you will be provided context about the conversation (json array), just go with the flow. If for the author it says 'You' then it refers to a previous instance of you that was asked a question, so try to be cohesive. If you need to, feel free to ping people the standard Discord way (<@theirID>). If someone's message is prefixed with >< or << or >> or ? it means that they are running a command, you can ignore those messages. You MUST primarily respond to the 'Latest message' given out side the context (but still given in a json format).",
-        input: "context: " + JSON.stringify(ctx) + "\nLatest message: " + input,
+        input:
+            "context: " +
+            JSON.stringify(ctx) +
+            "\nLatest message: " +
+            JSON.stringify(input),
     });
     return m.edit("AI Response: " + response.output_text);
 };

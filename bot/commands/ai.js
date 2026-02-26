@@ -26,7 +26,8 @@ exports.run = async (client, message, args) => {
         authorId: message.author.id,
         content: args.join(" "),
         messageId: message.id,
-        reference: message.reference.messageId,
+        reference:
+            message.reference != null ? message.reference.messageId : null,
     };
     const discordCtx = await message.channel.messages.fetch({ limit: 10 });
     const ctx = [];
@@ -47,7 +48,10 @@ exports.run = async (client, message, args) => {
                 authorId: msg.author.id,
                 message: msg.content,
                 messageId: msg.id,
-                reference: msg.reference.messageId,
+                reference:
+                    message.reference != null
+                        ? message.reference.messageId
+                        : null,
             });
         }
     });

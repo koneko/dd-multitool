@@ -63,5 +63,7 @@ exports.run = async (client, message, args) => {
             "\nLatest message: " +
             JSON.stringify(input),
     });
-    return m.edit("AI Response: " + response.output_text);
+    return message.channel.send(
+        response.output_text != "" ? response.output_text : "I can't sorry.",
+    );
 };

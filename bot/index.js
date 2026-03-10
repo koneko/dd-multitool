@@ -5,11 +5,9 @@ const {
     Collection,
     ActivityType,
 } = require("discord.js");
-const { Worker } = require("worker_threads");
 const fs = require("fs");
 const log = require("./log");
 const analytics = require("./analytics");
-const OpenAI = require("openai");
 let cfg = {};
 try {
     cfg = require("./config.json");
@@ -47,9 +45,6 @@ client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;
 client.usersToReactTo = [];
 client.blacklistedUserIDs = [];
-client.oaiClient = new OpenAI({
-    apiKey: process.env["OPENAI_API_KEY"],
-});
 if (!client.sharedEndpoint && process.argv[2] != "--no-shared")
     return log.error(
         "client.sharedEndpoint (process.env.SHARED_ENDPOINT) is undefined. (Pass --no-shared as flag to disable, be careful though!)",
@@ -152,7 +147,7 @@ client.on(Events.MessageCreate, async (message) => {
 
     let cmd = client.commands.get(command);
 
-    if (!cmd) {
+    if (!cmd && command.length > 0 && command != undefined) {
         cmd = client.commands.find((cmd) =>
             cmd.aliases.find((alias) => alias == command),
         );
@@ -167,7 +162,7 @@ client.on(Events.MessageCreate, async (message) => {
             cmd.run(client, message, [topic]);
             return;
         }
-    }
+    } else return;
 
     try {
         let cmdResult = await cmd.run(client, message, args);

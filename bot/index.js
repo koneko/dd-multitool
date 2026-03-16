@@ -160,9 +160,11 @@ client.on(Events.MessageCreate, async (message) => {
             if (!topic) return;
             cmd = client.commands.get("kb");
             cmd.run(client, message, [topic]);
-            return;
         }
-    } else return;
+        return;
+    }
+
+    if (command.length == 0 || !cmd) return;
 
     try {
         let cmdResult = await cmd.run(client, message, args);

@@ -6,14 +6,14 @@ module.exports = async function sendAnalytics(
     args,
     botResult,
     displayName,
-    endpoint
+    endpoint,
 ) {
     if (endpoint == undefined) return;
     try {
         const checkHealth = await fetch(endpoint + "health");
         if (checkHealth.status != 200)
             return console.log(
-                "Analytics API is not healthy, probably down, aborting sending analytics data."
+                "Analytics API is not healthy, probably down, aborting sending analytics data.",
             );
 
         const result = await fetch(endpoint + "api/command", {
@@ -31,9 +31,9 @@ module.exports = async function sendAnalytics(
                 botResult,
             }),
         });
-        console.log(result.status);
+        // console.log(result.status);
         if (result.status == 200) {
-            console.log("Analytics data collection success!");
+            // console.log("Analytics data collection success!");
         }
     } catch (e) {
         console.log("something went wrong with analytics.js");

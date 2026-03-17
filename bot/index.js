@@ -146,14 +146,10 @@ client.on(Events.MessageCreate, async (message) => {
     const command = args.shift().toLowerCase();
 
     let cmd = client.commands.get(command);
-    console.log(cmd);
-    console.log(!cmd);
     if (!cmd) {
         cmd = client.commands.find((cmd) =>
             cmd.aliases.find((alias) => alias == command),
         );
-        console.log(cmd);
-        console.log(!cmd);
 
         if (!cmd) {
             if (client.sharedEndpoint != null) {
@@ -165,6 +161,7 @@ client.on(Events.MessageCreate, async (message) => {
                 if (!topic) return;
                 cmd = client.commands.get("kb");
                 cmd.run(client, message, [topic]);
+                return;
             } else return;
         }
     }

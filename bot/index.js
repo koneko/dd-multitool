@@ -146,25 +146,28 @@ client.on(Events.MessageCreate, async (message) => {
     const command = args.shift().toLowerCase();
 
     let cmd = client.commands.get(command);
-
-    if (!cmd && command.length > 0 && command != undefined) {
+    console.log(cmd);
+    console.log(!cmd);
+    if (!cmd) {
         cmd = client.commands.find((cmd) =>
             cmd.aliases.find((alias) => alias == command),
         );
-        if (!cmd && client.sharedEndpoint != null) {
-            const result = await fetch(
-                client.sharedEndpoint + "knowledge?topic=list",
-            );
-            const data = await result.json();
-            const topic = data.topics.find((t) => t.startsWith(command));
-            if (!topic) return;
-            cmd = client.commands.get("kb");
-            cmd.run(client, message, [topic]);
-        }
-        return;
-    }
+        console.log(cmd);
+        console.log(!cmd);
 
-    if (command.length == 0 || !cmd) return;
+        if (!cmd) {
+            if (client.sharedEndpoint != null) {
+                const result = await fetch(
+                    client.sharedEndpoint + "knowledge?topic=list",
+                );
+                const data = await result.json();
+                const topic = data.topics.find((t) => t == command);
+                if (!topic) return;
+                cmd = client.commands.get("kb");
+                cmd.run(client, message, [topic]);
+            } else return;
+        }
+    }
 
     try {
         let cmdResult = await cmd.run(client, message, args);

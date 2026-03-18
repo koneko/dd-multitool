@@ -34,7 +34,11 @@ function getTimeChange() {
 
 function findMap(eit) {
     let map = mapArray.find((map) => map.eit == eit);
-    if (!map) map.friendlyName = "Couldn't find map with eit: " + eit;
+    if (map == undefined || map == null) {
+        map = {};
+        map.friendlyName =
+            "Probably a newly added map that shiro forgot to add to the lookup table, please ping him to fix it.";
+    }
     return map;
 }
 /**

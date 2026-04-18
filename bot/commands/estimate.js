@@ -14,6 +14,7 @@ exports.hidden = false;
  * @param {string[]} args
  */
 exports.run = async (client, message, args) => {
+    const isDisabled = true
     if (!client.sharedEndpoint)
         return message.channel.send(
             "client.sharedEndpoint is not set, please ping shiro.",
@@ -44,15 +45,16 @@ exports.run = async (client, message, args) => {
     try {
         const result = await fetch(
             client.sharedEndpoint +
-                "estimate" +
-                `?q=${combined}&showTable=` +
-                showtable,
+            "estimate" +
+            `?q=${combined}&showTable=` +
+            showtable,
         );
         const data = await result.json();
         if (data.error) {
-            return message.channel.send(
-                "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
-            );
+            if (isDisabled)
+                return message.channel.send(
+                    "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
+                );
             if (data.error == "entry-not-found")
                 return message.channel.send(
                     "Your query couldn't be matched with anything, please refine your query or refer to `CLIENT_PREFIX:help estimate`. You can also use `CLIENT_PREFIX:estimate` to see all available price tables for more information.".replaceAll(
@@ -83,9 +85,10 @@ exports.run = async (client, message, args) => {
                     `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``,
                 );
             } else {
-                return message.channel.send(
-                    "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
-                );
+                if (isDisabled)
+                    return message.channel.send(
+                        "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
+                    );
                 const {
                     gameValue,
                     estimatedPrice,
@@ -104,10 +107,9 @@ exports.run = async (client, message, args) => {
                     stringprice = `**${estimatedPrice}**`;
                 }
                 return message.channel.send(
-                    `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}${
-                        isLastInTable
-                            ? "\n-# Notice: This is the last price in the price table. It might not be accurate if your item greatly exceeds it!"
-                            : ""
+                    `Price estimate of a **${gameValue} ${returnKeyWord}** is ${stringprice} cv.\n-# Estimation is provided through looking at past trades/price checks/sheets in DDRNG.${mentionBeReal}${isLastInTable
+                        ? "\n-# Notice: This is the last price in the price table. It might not be accurate if your item greatly exceeds it!"
+                        : ""
                     }`,
                 );
             }

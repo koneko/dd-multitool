@@ -28,18 +28,18 @@ const client = new Client({
 });
 const DDRNG_GUILD_ID = 148849688722800640;
 const DDRNG_ALLOWED_CHANNELS = [
-    496061346446835732, 771329671953776661, 556864412338749440,
-    499656239572058132,
+    "496061346446835732", "771329671953776661", "556864412338749440",
+    "499656239572058132",
 ];
 const DDRNG_SPECIAL_ROLES = [
-    634979100196339712, // Admins
-    192066560410517505, // Mods unhoisted role
-    1035187756223172669, // Moderators hoisted role
-    979954082913599638, // Dyno Commands
+    "634979100196339712", // Admins
+    "192066560410517505", // Mods unhoisted role
+    "1035187756223172669", // Moderators hoisted role
+    "979954082913599638", // Dyno Commands
 ];
-const WHEELCHAIRS_GUILD_ID = 1178734676538560543;
+const WHEELCHAIRS_GUILD_ID = "1178734676538560543";
 client.commands = new Collection();
-client.ownerID = 263247134147608578;
+client.ownerID = "263247134147608578";
 client.prefix = prefix;
 client.analyticsEndpoint = process.env.ANALYTICS_ENDPOINT;
 client.sharedEndpoint = process.env.SHARED_ENDPOINT;

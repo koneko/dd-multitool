@@ -26,10 +26,10 @@ exports.run = (client, message, args) => {
 			)
 		);
 	args.forEach((arg) => {
-		if (isNaN(parseInt(arg))) {
+		if (isNaN(Number(arg))) {
 			is1nan = true;
 		}
-		arg = parseInt(arg);
+		arg = Number(arg);
 	});
 	if (is1nan)
 		return message.channel.send(
@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
 	if (!args[2]) args[2] = 0;
 	let sum = 0;
 	args.forEach((arg, i) => {
-		let num = parseInt(arg);
+		let num = Number(arg);
 		sum += num * ((i + 1) * 5)
 	});
 	let embed = new EmbedBuilder();

@@ -22,10 +22,10 @@ exports.run = (client, message, args) => {
             )
         );
     args.forEach((arg) => {
-        if (isNaN(parseInt(arg))) {
+        if (isNaN(Number(arg))) {
             is1nan = true;
         }
-        arg = parseInt(arg);
+        arg = Number(arg);
     });
     if (is1nan)
         return message.channel.send(
@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
     if (args.length > 1) args[1]--;
     args.forEach((arg) => {
         if (arg > 2000) arg = 2000; // just dont bother for anything higher than 2000
-        let num = parseInt(arg);
+        let num = Number(arg);
         sum += num;
         if (num < 0) bonus += num;
         else bonus += Math.ceil(num * 1.4);

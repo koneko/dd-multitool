@@ -54,7 +54,7 @@ exports.run = (client, message, args) => {
             .then((data) => {
                 let extraMap =
                     "*Currently there is no extra Map of the Week...*";
-                if (data.extraMapOfTheWeek != "AAAAAA") {
+                if (!data.extraMapOfTheWeek.startsWith("AAAAAA")) {
                     extraMap = `:fire: **${findMap(data.extraMapOfTheWeek).friendlyName
                         }** :fire:`;
                 }

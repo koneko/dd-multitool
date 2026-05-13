@@ -6,7 +6,7 @@ exports.usage = "CLIENT_PREFIX:mapoftheweek";
 exports.example = "CLIENT_PREFIX:mapoftheweek\nCLIENT_PREFIX:motw";
 exports.aliases = ["motw"];
 exports.hidden = false;
-function getTimeChange() {
+function getTimeChange () {
     const now = new Date();
     const dayOfWeek = now.getUTCDay();
     const jan = new Date(`7.1.${now.getUTCFullYear()} 00:00:00 UTC+0`);
@@ -32,8 +32,8 @@ function getTimeChange() {
     return Math.floor(nextTuesday.getTime() / 1000);
 }
 
-function findMap(eit) {
-    let map = mapArray.find((map) => map.eit == eit);
+function findMap (eit) {
+    let map = mapArray.find((map) => map.eit.contains(eit));
     if (map == undefined || map == null) {
         map = {};
         map.friendlyName =
@@ -55,9 +55,8 @@ exports.run = (client, message, args) => {
                 let extraMap =
                     "*Currently there is no extra Map of the Week...*";
                 if (data.extraMapOfTheWeek != "AAAAAA") {
-                    extraMap = `:fire: **${
-                        findMap(data.extraMapOfTheWeek).friendlyName
-                    }** :fire:`;
+                    extraMap = `:fire: **${findMap(data.extraMapOfTheWeek).friendlyName
+                        }** :fire:`;
                 }
                 let embed = new EmbedBuilder();
                 embed.setTitle(":map: Map of the Week");

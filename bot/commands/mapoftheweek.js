@@ -33,7 +33,7 @@ function getTimeChange () {
 }
 
 function findMap (eit) {
-    let map = mapArray.find((map) => map.eit.includes(eit));
+    let map = mapArray.find((map) => eit.includes(map.eit));
     if (map == undefined || map == null) {
         map = {};
         map.friendlyName =

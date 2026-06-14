@@ -1,14 +1,13 @@
 const priceTable = [
     {
-        regex: /\b(?:thp|summoner|summ|thp armor|summoner armor|summ armor)\b/i,
-        returnKeyWord: "summoner/thp piece",
+        regex: /\b(?:thp|summoner|summ|thp armor|guardian|tdmg|tdamage|trange|range|single)\b/i,
+        returnKeyWord: "guardian/thp/trange/tdmg/single stat piece",
         prices: [
             "1000;10",
-            "1050;12",
-            "1100;15",
-            "1150;25",
-            "1200;30",
-            "1250;100",
+            "1100;30",
+            "1150;60",
+            "1200;150",
+            "1250;300",
             "1300;500",
         ],
     },
@@ -111,19 +110,19 @@ const priceTable = [
             "2400;1000",
         ],
     },
-    {
-        regex: /\b(?:aura|trange|range|monk)\b/i,
-        returnKeyWord: "aura/trange piece",
-        prices: [
-            "1000;5",
-            "1050;15",
-            "1100;25",
-            "1150;50",
-            "1200;100",
-            "1250;200",
-            "1300;300",
-        ],
-    },
+    // {
+    //     regex: /\b(?:aura|trange|range|monk)\b/i,
+    //     returnKeyWord: "aura/trange piece",
+    //     prices: [
+    //         "1000;5",
+    //         "1050;15",
+    //         "1100;25",
+    //         "1150;50",
+    //         "1200;100",
+    //         "1250;200",
+    //         "1300;300",
+    //     ],
+    // },
     {
         regex: /\b(?:lumeric staff|beamer ev|dps ev weapon)\b/i,
         returnKeyWord: "dps ev weapon/lumeric staff",
@@ -133,19 +132,6 @@ const priceTable = [
         regex: /\b(?:builder ev weapon|kk ev)\b/i,
         returnKeyWord: "builder ev weapon",
         prices: ["999;10"],
-    },
-    {
-        regex: /\b(?:ev|tdmg|tdamage|tower damage)\b/i,
-        returnKeyWord: "builder ev/tower damage piece",
-        prices: [
-            "1000;5",
-            "1050;15",
-            "1100;25",
-            "1150;50",
-            "1200;100",
-            "1250;200",
-            "1300;300",
-        ],
     },
     {
         regex: /\b(?:cupid|lover's cupid)\b/i,
@@ -246,7 +232,7 @@ const priceTable = [
     },
 ];
 
-function constructPriceSubTable(idx) {
+function constructPriceSubTable (idx) {
     const orig = priceTable[idx];
     const priceSubTable = [];
     orig.prices.forEach((price) => {
@@ -260,7 +246,7 @@ function constructPriceSubTable(idx) {
     return priceSubTable;
 }
 
-function findClosestPrice(subtable, gameValue) {
+function findClosestPrice (subtable, gameValue) {
     let closestIdx = 0;
     let closest = subtable[closestIdx];
     let smallestDiff = Math.abs(subtable[0].number - gameValue);
@@ -277,7 +263,7 @@ function findClosestPrice(subtable, gameValue) {
     return { val: closest.val, diff: smallestDiff, idx: closestIdx };
 }
 
-function weightedInterpolatePrice(pricesArr, inputNum, p = 2) {
+function weightedInterpolatePrice (pricesArr, inputNum, p = 2) {
     let lower = null;
     let upper = null;
 
@@ -301,7 +287,7 @@ function weightedInterpolatePrice(pricesArr, inputNum, p = 2) {
     return lower.val + weight * (upper.val - lower.val);
 }
 
-function validateNum(input) {
+function validateNum (input) {
     const valid = /^(\d+(\.\d+)?)(k)?$/i.test(input);
 
     if (!valid) {

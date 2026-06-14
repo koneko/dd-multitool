@@ -64,7 +64,7 @@ exports.run = (client, message, args) => {
                     {
                         name: "What is Map of the Week?",
                         value:
-                            "Every week, one map will be picked as Map of the Week. It's name will be colored blue and all drops (except for chest drops) on campaign/survival/pure strategy will be **doubled**.\nMap of the Week changes " +
+                            "Every week, one map will be picked as Map of the Week. It's name will be colored blue and all drops (except for chest drops) on campaign/survival/pure strategy will be **doubled**. Coal and fragment rewards however are not doubled.\nMap of the Week changes " +
                             `**<t:${getTimeChange()}:R>**.`,
                     },
                     {

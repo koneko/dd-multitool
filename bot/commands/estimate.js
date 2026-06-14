@@ -43,6 +43,9 @@ exports.run = async (client, message, args) => {
         return;
     }
     try {
+
+        if (isDisabled)
+            showtable = true
         const result = await fetch(
             client.sharedEndpoint +
             "estimate" +
@@ -50,6 +53,7 @@ exports.run = async (client, message, args) => {
             showtable,
         );
         const data = await result.json();
+
         if (data.error) {
             if (isDisabled)
                 return message.channel.send(
@@ -85,10 +89,10 @@ exports.run = async (client, message, args) => {
                     `Displaying data price table for \`${returnKeyWord}\`.\n\`\`\`\nGame Value\tPrice\n${res}\`\`\``,
                 );
             } else {
-                if (isDisabled)
-                    return message.channel.send(
-                        "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
-                    );
+                // if (isDisabled)
+                //     return message.channel.send(
+                //         "price estimation has been disabled until shiro works out a better method that factors in sides. you can still use `showtable` but even that is wrong, so at this point, sit tight and wait for a better solution. thanks for believing in me.",
+                //     );
                 const {
                     gameValue,
                     estimatedPrice,

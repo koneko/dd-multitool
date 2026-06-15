@@ -1,6 +1,6 @@
 const priceTable = [
     {
-        regex: /\b(?:thp|summoner|summ|thp armor|guardian|tdmg|tdamage|trange|range|single)\b/i,
+        regex: /\b(?:thp|summoner|summ|thp armor|guardian|tdmg|tdamage|trange|range|single|aura)\b/i,
         returnKeyWord: "guardian/thp/trange/tdmg/single stat piece",
         prices: [
             "1000;10",
